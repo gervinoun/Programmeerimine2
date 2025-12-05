@@ -1,0 +1,262 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{AE74289E-DE79-F788-C2DC-BADD9C633513}|KooliProjekt.Application\\KooliProjekt.Application.csproj|c:\\users\\gervin.oun\\documents\\github\\programmeerimine2\\autode rentimine\\kooliprojekt.application\\features\\bookings\\listusersqueryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AE74289E-DE79-F788-C2DC-BADD9C633513}|KooliProjekt.Application\\KooliProjekt.Application.csproj|solutionrelative:kooliprojekt.application\\features\\bookings\\listusersqueryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AE74289E-DE79-F788-C2DC-BADD9C633513}|KooliProjekt.Application\\KooliProjekt.Application.csproj|c:\\users\\gervin.oun\\documents\\github\\programmeerimine2\\autode rentimine\\kooliprojekt.application\\features\\bookings\\listusersquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AE74289E-DE79-F788-C2DC-BADD9C633513}|KooliProjekt.Application\\KooliProjekt.Application.csproj|solutionrelative:kooliprojekt.application\\features\\bookings\\listusersquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\Migrations\\20251205084634_Initial3.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:KooliProjekt.Application\\Migrations\\20251205084634_Initial3.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AE74289E-DE79-F788-C2DC-BADD9C633513}|KooliProjekt.Application\\KooliProjekt.Application.csproj|c:\\users\\gervin.oun\\documents\\github\\programmeerimine2\\autode rentimine\\kooliprojekt.application\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AE74289E-DE79-F788-C2DC-BADD9C633513}|KooliProjekt.Application\\KooliProjekt.Application.csproj|solutionrelative:kooliprojekt.application\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\Migrations\\20251205084146_Initial2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:KooliProjekt.Application\\Migrations\\20251205084146_Initial2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AE74289E-DE79-F788-C2DC-BADD9C633513}|KooliProjekt.Application\\KooliProjekt.Application.csproj|c:\\users\\gervin.oun\\documents\\github\\programmeerimine2\\autode rentimine\\kooliprojekt.application\\data\\invoice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AE74289E-DE79-F788-C2DC-BADD9C633513}|KooliProjekt.Application\\KooliProjekt.Application.csproj|solutionrelative:kooliprojekt.application\\data\\invoice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AE74289E-DE79-F788-C2DC-BADD9C633513}|KooliProjekt.Application\\KooliProjekt.Application.csproj|c:\\users\\gervin.oun\\documents\\github\\programmeerimine2\\autode rentimine\\kooliprojekt.application\\data\\cartype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AE74289E-DE79-F788-C2DC-BADD9C633513}|KooliProjekt.Application\\KooliProjekt.Application.csproj|solutionrelative:kooliprojekt.application\\data\\cartype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5A2101DC-D650-6EBB-6EBB-3FE62A3E9647}|KooliProjekt.WebAPI\\KooliProjekt.WebAPI.csproj|c:\\users\\gervin.oun\\documents\\github\\programmeerimine2\\autode rentimine\\kooliprojekt.webapi\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5A2101DC-D650-6EBB-6EBB-3FE62A3E9647}|KooliProjekt.WebAPI\\KooliProjekt.WebAPI.csproj|solutionrelative:kooliprojekt.webapi\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AE74289E-DE79-F788-C2DC-BADD9C633513}|KooliProjekt.Application\\KooliProjekt.Application.csproj|c:\\users\\gervin.oun\\documents\\github\\programmeerimine2\\autode rentimine\\kooliprojekt.application\\features\\users\\listusersqueryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AE74289E-DE79-F788-C2DC-BADD9C633513}|KooliProjekt.Application\\KooliProjekt.Application.csproj|solutionrelative:kooliprojekt.application\\features\\users\\listusersqueryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AE74289E-DE79-F788-C2DC-BADD9C633513}|KooliProjekt.Application\\KooliProjekt.Application.csproj|c:\\users\\gervin.oun\\documents\\github\\programmeerimine2\\autode rentimine\\kooliprojekt.application\\features\\users\\listusersquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AE74289E-DE79-F788-C2DC-BADD9C633513}|KooliProjekt.Application\\KooliProjekt.Application.csproj|solutionrelative:kooliprojekt.application\\features\\users\\listusersquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AE74289E-DE79-F788-C2DC-BADD9C633513}|KooliProjekt.Application\\KooliProjekt.Application.csproj|c:\\users\\gervin.oun\\documents\\github\\programmeerimine2\\autode rentimine\\kooliprojekt.application\\data\\booking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AE74289E-DE79-F788-C2DC-BADD9C633513}|KooliProjekt.Application\\KooliProjekt.Application.csproj|solutionrelative:kooliprojekt.application\\data\\booking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AE74289E-DE79-F788-C2DC-BADD9C633513}|KooliProjekt.Application\\KooliProjekt.Application.csproj|c:\\users\\gervin.oun\\documents\\github\\programmeerimine2\\autode rentimine\\kooliprojekt.application\\data\\car.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AE74289E-DE79-F788-C2DC-BADD9C633513}|KooliProjekt.Application\\KooliProjekt.Application.csproj|solutionrelative:kooliprojekt.application\\data\\car.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AE74289E-DE79-F788-C2DC-BADD9C633513}|KooliProjekt.Application\\KooliProjekt.Application.csproj|c:\\users\\gervin.oun\\documents\\github\\programmeerimine2\\autode rentimine\\kooliprojekt.application\\data\\invoiceline.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AE74289E-DE79-F788-C2DC-BADD9C633513}|KooliProjekt.Application\\KooliProjekt.Application.csproj|solutionrelative:kooliprojekt.application\\data\\invoiceline.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AE74289E-DE79-F788-C2DC-BADD9C633513}|KooliProjekt.Application\\KooliProjekt.Application.csproj|c:\\users\\gervin.oun\\documents\\github\\programmeerimine2\\autode rentimine\\kooliprojekt.application\\data\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AE74289E-DE79-F788-C2DC-BADD9C633513}|KooliProjekt.Application\\KooliProjekt.Application.csproj|solutionrelative:kooliprojekt.application\\data\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ListUsersQueryHandler.cs",
+              "DocumentMoniker": "C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\Features\\Bookings\\ListUsersQueryHandler.cs",
+              "RelativeDocumentMoniker": "KooliProjekt.Application\\Features\\Bookings\\ListUsersQueryHandler.cs",
+              "ToolTip": "C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\Features\\Bookings\\ListUsersQueryHandler.cs",
+              "RelativeToolTip": "KooliProjekt.Application\\Features\\Bookings\\ListUsersQueryHandler.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-05T08:52:59.303Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ListUsersQuery.cs",
+              "DocumentMoniker": "C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\Features\\Bookings\\ListUsersQuery.cs",
+              "RelativeDocumentMoniker": "KooliProjekt.Application\\Features\\Bookings\\ListUsersQuery.cs",
+              "ToolTip": "C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\Features\\Bookings\\ListUsersQuery.cs",
+              "RelativeToolTip": "KooliProjekt.Application\\Features\\Bookings\\ListUsersQuery.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-05T08:52:49.491Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "20251205084634_Initial3.cs",
+              "DocumentMoniker": "C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\Migrations\\20251205084634_Initial3.cs",
+              "RelativeDocumentMoniker": "KooliProjekt.Application\\Migrations\\20251205084634_Initial3.cs",
+              "ToolTip": "C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\Migrations\\20251205084634_Initial3.cs",
+              "RelativeToolTip": "KooliProjekt.Application\\Migrations\\20251205084634_Initial3.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAA1wAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-05T08:46:35.032Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "20251205084146_Initial2.cs",
+              "DocumentMoniker": "C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\Migrations\\20251205084146_Initial2.cs",
+              "RelativeDocumentMoniker": "KooliProjekt.Application\\Migrations\\20251205084146_Initial2.cs",
+              "ToolTip": "C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\Migrations\\20251205084146_Initial2.cs",
+              "RelativeToolTip": "KooliProjekt.Application\\Migrations\\20251205084146_Initial2.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-05T08:41:46.311Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "UsersController.cs",
+              "DocumentMoniker": "C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\KooliProjekt.WebAPI\\Controllers\\UsersController.cs",
+              "RelativeDocumentMoniker": "KooliProjekt.WebAPI\\Controllers\\UsersController.cs",
+              "ToolTip": "C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\KooliProjekt.WebAPI\\Controllers\\UsersController.cs",
+              "RelativeToolTip": "KooliProjekt.WebAPI\\Controllers\\UsersController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-05T08:30:44.31Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "cartype.cs",
+              "DocumentMoniker": "C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\Data\\cartype.cs",
+              "RelativeDocumentMoniker": "KooliProjekt.Application\\Data\\cartype.cs",
+              "ToolTip": "C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\Data\\cartype.cs",
+              "RelativeToolTip": "KooliProjekt.Application\\Data\\cartype.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-05T07:41:37.499Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\Data\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "KooliProjekt.Application\\Data\\ApplicationDbContext.cs",
+              "ToolTip": "C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\Data\\ApplicationDbContext.cs",
+              "RelativeToolTip": "KooliProjekt.Application\\Data\\ApplicationDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-05T07:43:33.329Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "ListUsersQueryHandler.cs",
+              "DocumentMoniker": "C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\Features\\Users\\ListUsersQueryHandler.cs",
+              "RelativeDocumentMoniker": "KooliProjekt.Application\\Features\\Users\\ListUsersQueryHandler.cs",
+              "ToolTip": "C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\Features\\Users\\ListUsersQueryHandler.cs",
+              "RelativeToolTip": "KooliProjekt.Application\\Features\\Users\\ListUsersQueryHandler.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-05T08:33:50.889Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "ListUsersQuery.cs",
+              "DocumentMoniker": "C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\Features\\Users\\ListUsersQuery.cs",
+              "RelativeDocumentMoniker": "KooliProjekt.Application\\Features\\Users\\ListUsersQuery.cs",
+              "ToolTip": "C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\Features\\Users\\ListUsersQuery.cs",
+              "RelativeToolTip": "KooliProjekt.Application\\Features\\Users\\ListUsersQuery.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-05T08:33:39.744Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "invoice.cs",
+              "DocumentMoniker": "C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\Data\\invoice.cs",
+              "RelativeDocumentMoniker": "KooliProjekt.Application\\Data\\invoice.cs",
+              "ToolTip": "C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\Data\\invoice.cs",
+              "RelativeToolTip": "KooliProjekt.Application\\Data\\invoice.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-05T07:42:00.828Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "booking.cs",
+              "DocumentMoniker": "C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\Data\\booking.cs",
+              "RelativeDocumentMoniker": "KooliProjekt.Application\\Data\\booking.cs",
+              "ToolTip": "C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\Data\\booking.cs",
+              "RelativeToolTip": "KooliProjekt.Application\\Data\\booking.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-05T07:41:49.647Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "car.cs",
+              "DocumentMoniker": "C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\Data\\car.cs",
+              "RelativeDocumentMoniker": "KooliProjekt.Application\\Data\\car.cs",
+              "ToolTip": "C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\Data\\car.cs",
+              "RelativeToolTip": "KooliProjekt.Application\\Data\\car.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-05T07:41:43.438Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "invoiceline.cs",
+              "DocumentMoniker": "C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\Data\\invoiceline.cs",
+              "RelativeDocumentMoniker": "KooliProjekt.Application\\Data\\invoiceline.cs",
+              "ToolTip": "C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\Data\\invoiceline.cs",
+              "RelativeToolTip": "KooliProjekt.Application\\Data\\invoiceline.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-05T07:42:09.197Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "user.cs",
+              "DocumentMoniker": "C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\Data\\user.cs",
+              "RelativeDocumentMoniker": "KooliProjekt.Application\\Data\\user.cs",
+              "ToolTip": "C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\Data\\user.cs",
+              "RelativeToolTip": "KooliProjekt.Application\\Data\\user.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-05T07:41:26.797Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
