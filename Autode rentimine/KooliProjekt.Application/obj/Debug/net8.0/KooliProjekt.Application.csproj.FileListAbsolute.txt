@@ -1,0 +1,14 @@
+C:\KooliProjekt2025\KooliProjekt.Application\bin\Debug\net8.0\KooliProjekt.Application.deps.json
+C:\KooliProjekt2025\KooliProjekt.Application\bin\Debug\net8.0\KooliProjekt.Application.runtimeconfig.json
+C:\KooliProjekt2025\KooliProjekt.Application\bin\Debug\net8.0\KooliProjekt.Application.dll
+C:\KooliProjekt2025\KooliProjekt.Application\bin\Debug\net8.0\KooliProjekt.Application.pdb
+C:\KooliProjekt2025\KooliProjekt.Application\obj\Debug\net8.0\KooliProjekt.Application.csproj.AssemblyReference.cache
+C:\KooliProjekt2025\KooliProjekt.Application\obj\Debug\net8.0\KooliProjekt.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\KooliProjekt2025\KooliProjekt.Application\obj\Debug\net8.0\KooliProjekt.Application.AssemblyInfoInputs.cache
+C:\KooliProjekt2025\KooliProjekt.Application\obj\Debug\net8.0\KooliProjekt.Application.AssemblyInfo.cs
+C:\KooliProjekt2025\KooliProjekt.Application\obj\Debug\net8.0\KooliProjekt.Application.csproj.CoreCompileInputs.cache
+C:\KooliProjekt2025\KooliProjekt.Application\obj\Debug\net8.0\KooliProjekt.Application.dll
+C:\KooliProjekt2025\KooliProjekt.Application\obj\Debug\net8.0\refint\KooliProjekt.Application.dll
+C:\KooliProjekt2025\KooliProjekt.Application\obj\Debug\net8.0\KooliProjekt.Application.pdb
+C:\KooliProjekt2025\KooliProjekt.Application\obj\Debug\net8.0\KooliProjekt.Application.genruntimeconfig.cache
+C:\KooliProjekt2025\KooliProjekt.Application\obj\Debug\net8.0\ref\KooliProjekt.Application.dll
