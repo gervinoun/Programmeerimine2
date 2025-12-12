@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace KooliProjekt.Application.Data
 {
-    public class Cartype
+    public class CarType
     {
         public int Id { get; set; }
 

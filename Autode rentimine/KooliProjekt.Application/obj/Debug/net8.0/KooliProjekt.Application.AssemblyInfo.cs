@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("KooliProjekt.Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7340053c393ab644e35cfab4624d9c3f67759233")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f17e4a0b524fad1d23fd5ff8fa7698f6595d6e5f")]
 [assembly: System.Reflection.AssemblyProductAttribute("KooliProjekt.Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("KooliProjekt.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

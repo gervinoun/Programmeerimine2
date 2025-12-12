@@ -2,9 +2,9 @@
 using KooliProjekt.Application.Data;
 using MediatR;
 
-namespace KooliProjekt.Application.Features.Users
+namespace KooliProjekt.Application.Features.CarTypes
 {
-    public class ListUsersQuery : IRequest<IList<User>>
+    public class ListCarTypesQuery : IRequest<IList<CarType>>
     {
     }
 }

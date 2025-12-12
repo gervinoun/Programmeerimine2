@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace KooliProjekt.Application.Data
 {
-    public class Invoiceline
+    public class InvoiceLine
     { 
         public int Id { get; set; }
 

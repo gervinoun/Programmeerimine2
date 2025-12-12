@@ -5,22 +5,23 @@ using KooliProjekt.Application.Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace KooliProjekt.Application.Features.Users
+namespace KooliProjekt.Application.Features.CarTypes
 {
-    public class ListUsersQueryHandler : IRequestHandler<ListUsersQuery, IList<User>>
+    public class ListCarTypesQueryHandler
+        : IRequestHandler<ListCarTypesQuery, IList<CarType>>
     {
         private readonly ApplicationDbContext _db;
 
-        public ListUsersQueryHandler(ApplicationDbContext db)
+        public ListCarTypesQueryHandler(ApplicationDbContext db)
         {
             _db = db;
         }
 
-        public async Task<IList<User>> Handle(
-            ListUsersQuery request,
+        public async Task<IList<CarType>> Handle(
+            ListCarTypesQuery request,
             CancellationToken cancellationToken)
         {
-            return await _db.Users.ToListAsync(cancellationToken);
+            return await _db.CarTypes.ToListAsync(cancellationToken);
         }
     }
 }

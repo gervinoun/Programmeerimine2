@@ -5,9 +5,10 @@ using KooliProjekt.Application.Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace KooliProjekt.Application.Features.Users
+namespace KooliProjekt.Application.Features.Bookings
 {
-    public class ListBookingsQueryHandler : IRequestHandler<ListBookingsQuery, IList<Booking>>
+    public class ListBookingsQueryHandler
+        : IRequestHandler<ListBookingsQuery, IList<Booking>>
     {
         private readonly ApplicationDbContext _db;
 
@@ -16,11 +17,11 @@ namespace KooliProjekt.Application.Features.Users
             _db = db;
         }
 
-        public async Task<IList<User>> Handle(
-            ListUsersQuery request,
+        public async Task<IList<Booking>> Handle(
+            ListBookingsQuery request,
             CancellationToken cancellationToken)
         {
-            return await _db.Users.ToListAsync(cancellationToken);
+            return await _db.Bookings.ToListAsync(cancellationToken);
         }
     }
 }

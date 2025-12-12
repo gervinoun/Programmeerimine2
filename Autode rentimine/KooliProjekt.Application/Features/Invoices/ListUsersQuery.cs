@@ -2,9 +2,9 @@
 using KooliProjekt.Application.Data;
 using MediatR;
 
-namespace KooliProjekt.Application.Features.Users
+namespace KooliProjekt.Application.Features.InvoiceLines
 {
-    public class ListUsersQuery : IRequest<IList<User>>
+    public class ListInvoiceLinesQuery : IRequest<IList<InvoiceLine>>
     {
     }
 }
