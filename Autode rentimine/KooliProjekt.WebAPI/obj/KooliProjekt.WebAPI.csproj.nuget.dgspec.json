@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\KooliProjekt.WebAPI\\KooliProjekt.WebAPI.csproj": {}
+    "C:\\Users\\gervi\\source\\repos\\gervinoun\\Programmeerimine2\\Autode rentimine\\KooliProjekt.WebAPI\\KooliProjekt.WebAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\KooliProjekt.Application.csproj": {
+    "C:\\Users\\gervi\\source\\repos\\gervinoun\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\KooliProjekt.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\KooliProjekt.Application.csproj",
+        "projectUniqueName": "C:\\Users\\gervi\\source\\repos\\gervinoun\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\KooliProjekt.Application.csproj",
         "projectName": "KooliProjekt.Application",
-        "projectPath": "C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\KooliProjekt.Application.csproj",
-        "packagesPath": "C:\\Users\\gervin.oun\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\obj\\",
+        "projectPath": "C:\\Users\\gervi\\source\\repos\\gervinoun\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\KooliProjekt.Application.csproj",
+        "packagesPath": "C:\\Users\\gervi\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\gervi\\source\\repos\\gervinoun\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\gervin.oun\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\gervi\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -100,24 +100,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.101/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\KooliProjekt.WebAPI\\KooliProjekt.WebAPI.csproj": {
+    "C:\\Users\\gervi\\source\\repos\\gervinoun\\Programmeerimine2\\Autode rentimine\\KooliProjekt.WebAPI\\KooliProjekt.WebAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\KooliProjekt.WebAPI\\KooliProjekt.WebAPI.csproj",
+        "projectUniqueName": "C:\\Users\\gervi\\source\\repos\\gervinoun\\Programmeerimine2\\Autode rentimine\\KooliProjekt.WebAPI\\KooliProjekt.WebAPI.csproj",
         "projectName": "KooliProjekt.WebAPI",
-        "projectPath": "C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\KooliProjekt.WebAPI\\KooliProjekt.WebAPI.csproj",
-        "packagesPath": "C:\\Users\\gervin.oun\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\KooliProjekt.WebAPI\\obj\\",
+        "projectPath": "C:\\Users\\gervi\\source\\repos\\gervinoun\\Programmeerimine2\\Autode rentimine\\KooliProjekt.WebAPI\\KooliProjekt.WebAPI.csproj",
+        "packagesPath": "C:\\Users\\gervi\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\gervi\\source\\repos\\gervinoun\\Programmeerimine2\\Autode rentimine\\KooliProjekt.WebAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\gervin.oun\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\gervi\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -132,8 +132,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\KooliProjekt.Application.csproj": {
-                "projectPath": "C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\KooliProjekt.Application.csproj"
+              "C:\\Users\\gervi\\source\\repos\\gervinoun\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\KooliProjekt.Application.csproj": {
+                "projectPath": "C:\\Users\\gervi\\source\\repos\\gervinoun\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\KooliProjekt.Application.csproj"
               }
             }
           }
@@ -194,7 +194,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.101/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

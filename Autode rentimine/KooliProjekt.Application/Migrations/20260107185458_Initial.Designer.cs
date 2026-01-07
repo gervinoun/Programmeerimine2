@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KooliProjekt.Application.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251205084146_Initial2")]
-    partial class Initial2
+    [Migration("20260107185458_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -91,7 +91,7 @@ namespace KooliProjekt.Application.Migrations
                     b.ToTable("Cars");
                 });
 
-            modelBuilder.Entity("KooliProjekt.Application.Data.Cartype", b =>
+            modelBuilder.Entity("KooliProjekt.Application.Data.CarType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -105,7 +105,7 @@ namespace KooliProjekt.Application.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cartypes");
+                    b.ToTable("CarTypes");
                 });
 
             modelBuilder.Entity("KooliProjekt.Application.Data.Invoice", b =>
@@ -130,7 +130,7 @@ namespace KooliProjekt.Application.Migrations
                     b.ToTable("Invoices");
                 });
 
-            modelBuilder.Entity("KooliProjekt.Application.Data.Invoiceline", b =>
+            modelBuilder.Entity("KooliProjekt.Application.Data.InvoiceLine", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -151,7 +151,7 @@ namespace KooliProjekt.Application.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Invs");
+                    b.ToTable("InvoiceLines");
                 });
 
             modelBuilder.Entity("KooliProjekt.Application.Data.User", b =>

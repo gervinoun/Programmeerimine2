@@ -3790,23 +3790,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\gervin.oun\\.nuget\\packages\\": {},
+    "C:\\Users\\gervi\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\KooliProjekt.Application.csproj",
+      "projectUniqueName": "C:\\Users\\gervi\\source\\repos\\gervinoun\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\KooliProjekt.Application.csproj",
       "projectName": "KooliProjekt.Application",
-      "projectPath": "C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\KooliProjekt.Application.csproj",
-      "packagesPath": "C:\\Users\\gervin.oun\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\gervin.oun\\Documents\\GitHub\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\obj\\",
+      "projectPath": "C:\\Users\\gervi\\source\\repos\\gervinoun\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\KooliProjekt.Application.csproj",
+      "packagesPath": "C:\\Users\\gervi\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\gervi\\source\\repos\\gervinoun\\Programmeerimine2\\Autode rentimine\\KooliProjekt.Application\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\gervin.oun\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\gervi\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -3889,7 +3889,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.100/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.101/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

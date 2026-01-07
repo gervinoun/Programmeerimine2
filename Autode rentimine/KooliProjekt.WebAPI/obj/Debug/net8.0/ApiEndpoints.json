@@ -1,8 +1,8 @@
 [
   {
-    "ContainingType": "KooliProjekt.WebAPI.Controllers.ToDoListsController",
+    "ContainingType": "KooliProjekt.WebAPI.Controllers.BookingsController",
     "Method": "List",
-    "RelativePath": "api/ToDoLists",
+    "RelativePath": "api/Bookings",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -10,24 +10,53 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "KooliProjekt.WebAPI.Controllers.WeatherForecastController",
-    "Method": "Get",
-    "RelativePath": "WeatherForecast",
+    "ContainingType": "KooliProjekt.WebAPI.Controllers.CarsController",
+    "Method": "List",
+    "RelativePath": "api/Cars",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[KooliProjekt.WebAPI.WeatherForecast, KooliProjekt.WebAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ],
-    "EndpointName": "GetWeatherForecast"
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "KooliProjekt.WebAPI.Controllers.CarTypesController",
+    "Method": "List",
+    "RelativePath": "api/CarTypes",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "KooliProjekt.WebAPI.Controllers.InvoiceLinesController",
+    "Method": "List",
+    "RelativePath": "api/InvoiceLines",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "KooliProjekt.WebAPI.Controllers.InvoicesController",
+    "Method": "List",
+    "RelativePath": "api/Invoices",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "KooliProjekt.WebAPI.Controllers.UsersController",
+    "Method": "List",
+    "RelativePath": "api/Users",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
   }
 ]
