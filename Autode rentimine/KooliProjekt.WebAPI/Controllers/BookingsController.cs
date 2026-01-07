@@ -22,5 +22,19 @@ namespace KooliProjekt.WebAPI.Controllers
             var bookings = await _mediator.Send(new ListBookingsQuery());
             return Ok(bookings);
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            var result = await _mediator.Send(new GetBookingQuery { Id = id });
+            return Ok(result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Save([FromBody] SaveBookingCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
     }
 }

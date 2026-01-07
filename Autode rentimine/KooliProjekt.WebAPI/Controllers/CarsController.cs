@@ -16,11 +16,28 @@ namespace KooliProjekt.WebAPI.Controllers
             _mediator = mediator;
         }
 
+        // GET api/Cars
         [HttpGet]
         public async Task<IActionResult> List()
         {
             var cars = await _mediator.Send(new ListCarsQuery());
             return Ok(cars);
+        }
+
+        // GET api/Cars/5
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            var result = await _mediator.Send(new GetCarQuery { Id = id });
+            return Ok(result);
+        }
+
+        // POST api/Cars
+        [HttpPost]
+        public async Task<IActionResult> Save([FromBody] SaveCarCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
         }
     }
 }

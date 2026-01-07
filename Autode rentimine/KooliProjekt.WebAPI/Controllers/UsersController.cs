@@ -22,5 +22,19 @@ namespace KooliProjekt.WebAPI.Controllers
             var users = await _mediator.Send(new ListUsersQuery());
             return Ok(users);
         }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            var result = await _mediator.Send(new GetUserQuery { Id = id });
+            return Ok(result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Save([FromBody] SaveUserCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
     }
 }

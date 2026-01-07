@@ -22,5 +22,19 @@ namespace KooliProjekt.WebAPI.Controllers
             var invoices = await _mediator.Send(new ListInvoicesQuery());
             return Ok(invoices);
         }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            var result = await _mediator.Send(new GetInvoiceQuery { Id = id });
+            return Ok(result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Save([FromBody] SaveInvoiceCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
     }
 }
