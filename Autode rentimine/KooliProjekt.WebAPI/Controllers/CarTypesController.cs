@@ -16,12 +16,15 @@ namespace KooliProjekt.WebAPI.Controllers
             _mediator = mediator;
         }
 
+        // GET api/CarTypes
         [HttpGet]
         public async Task<IActionResult> List()
         {
             var carTypes = await _mediator.Send(new ListCarTypesQuery());
             return Ok(carTypes);
         }
+
+        // GET api/CarTypes/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
@@ -29,6 +32,7 @@ namespace KooliProjekt.WebAPI.Controllers
             return Ok(result);
         }
 
+        // POST api/CarTypes
         [HttpPost]
         public async Task<IActionResult> Save([FromBody] SaveCarTypeCommand command)
         {
@@ -36,5 +40,12 @@ namespace KooliProjekt.WebAPI.Controllers
             return Ok(result);
         }
 
+        // DELETE api/CarTypes/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var result = await _mediator.Send(new DeleteCarTypeCommand { Id = id });
+            return Ok(result);
+        }
     }
 }

@@ -16,12 +16,15 @@ namespace KooliProjekt.WebAPI.Controllers
             _mediator = mediator;
         }
 
+        // GET api/Users
         [HttpGet]
         public async Task<IActionResult> List()
         {
             var users = await _mediator.Send(new ListUsersQuery());
             return Ok(users);
         }
+
+        // GET api/Users/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
@@ -29,6 +32,7 @@ namespace KooliProjekt.WebAPI.Controllers
             return Ok(result);
         }
 
+        // POST api/Users
         [HttpPost]
         public async Task<IActionResult> Save([FromBody] SaveUserCommand command)
         {
@@ -36,5 +40,12 @@ namespace KooliProjekt.WebAPI.Controllers
             return Ok(result);
         }
 
+        // DELETE api/Users/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var result = await _mediator.Send(new DeleteUserCommand { Id = id });
+            return Ok(result);
+        }
     }
 }
