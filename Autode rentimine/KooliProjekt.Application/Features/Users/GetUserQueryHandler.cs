@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using KooliProjekt.Application.Data;
+using KooliProjekt.Application.Data.Repositories;
 using KooliProjekt.Application.Infrastructure.Results;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -10,19 +10,18 @@ namespace KooliProjekt.Application.Features.Users
 {
     public class GetUserQueryHandler : IRequestHandler<GetUserQuery, OperationResult<object>>
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IUserRepository _repo;
 
-        public GetUserQueryHandler(ApplicationDbContext dbContext)
+        public GetUserQueryHandler(IUserRepository repo)
         {
-            _dbContext = dbContext;
+            _repo = repo;
         }
 
         public async Task<OperationResult<object>> Handle(GetUserQuery request, CancellationToken cancellationToken)
         {
             var result = new OperationResult<object>();
 
-            result.Value = await _dbContext
-                .Users
+            result.Value = await _repo.Query()
                 .Where(u => u.Id == request.Id)
                 .Select(u => new
                 {
@@ -30,7 +29,7 @@ namespace KooliProjekt.Application.Features.Users
                     u.Name,
                     u.Email,
                     u.Phone
-                    // DO NOT return PasswordHash
+                    // PasswordHash intentionally not returned
                 })
                 .FirstOrDefaultAsync(cancellationToken);
 

@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using KooliProjekt.Application.Data;
+using KooliProjekt.Application.Data.Repositories;
 using KooliProjekt.Application.Infrastructure.Results;
 using MediatR;
 
@@ -8,27 +9,26 @@ namespace KooliProjekt.Application.Features.Bookings
 {
     public class SaveBookingCommandHandler : IRequestHandler<SaveBookingCommand, OperationResult>
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IBookingRepository _repo;
 
-        public SaveBookingCommandHandler(ApplicationDbContext dbContext)
+        public SaveBookingCommandHandler(IBookingRepository repo)
         {
-            _dbContext = dbContext;
+            _repo = repo;
         }
 
         public async Task<OperationResult> Handle(SaveBookingCommand request, CancellationToken cancellationToken)
         {
             var result = new OperationResult();
 
-            var booking = new Booking();
+            Booking booking;
             if (request.Id == 0)
             {
-                await _dbContext.Bookings.AddAsync(booking, cancellationToken);
+                booking = new Booking();
+                await _repo.AddAsync(booking, cancellationToken);
             }
             else
             {
-                booking = await _dbContext.Bookings.FindAsync(new object[] { request.Id }, cancellationToken);
-                // teacher-style: no error handling; optional:
-                // if (booking == null) return result;
+                booking = await _repo.GetByIdAsync(request.Id, cancellationToken);
             }
 
             booking.UserId = request.UserId;
@@ -39,7 +39,7 @@ namespace KooliProjekt.Application.Features.Bookings
             booking.KmEnd = request.KmEnd;
             booking.Status = request.Status;
 
-            await _dbContext.SaveChangesAsync(cancellationToken);
+            await _repo.SaveChangesAsync(cancellationToken);
 
             return result;
         }

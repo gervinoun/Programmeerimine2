@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using KooliProjekt.Application.Data;
+using KooliProjekt.Application.Data.Repositories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,18 +10,16 @@ namespace KooliProjekt.Application.Features.Users
 {
     public class ListUsersQueryHandler : IRequestHandler<ListUsersQuery, IList<User>>
     {
-        private readonly ApplicationDbContext _db;
+        private readonly IUserRepository _repo;
 
-        public ListUsersQueryHandler(ApplicationDbContext db)
+        public ListUsersQueryHandler(IUserRepository repo)
         {
-            _db = db;
+            _repo = repo;
         }
 
-        public async Task<IList<User>> Handle(
-            ListUsersQuery request,
-            CancellationToken cancellationToken)
+        public async Task<IList<User>> Handle(ListUsersQuery request, CancellationToken cancellationToken)
         {
-            return await _db.Users.ToListAsync(cancellationToken);
+            return await _repo.Query().ToListAsync(cancellationToken);
         }
     }
 }

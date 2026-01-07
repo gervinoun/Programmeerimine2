@@ -2,26 +2,24 @@
 using System.Threading;
 using System.Threading.Tasks;
 using KooliProjekt.Application.Data;
+using KooliProjekt.Application.Data.Repositories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace KooliProjekt.Application.Features.InvoiceLines
+namespace KooliProjekt.Application.Features.Invoices
 {
-    public class ListInvoiceLinesQueryHandler
-        : IRequestHandler<ListInvoiceLinesQuery, IList<InvoiceLine>>
+    public class ListInvoicesQueryHandler : IRequestHandler<ListInvoicesQuery, IList<Invoice>>
     {
-        private readonly ApplicationDbContext _db;
+        private readonly IInvoiceRepository _repo;
 
-        public ListInvoiceLinesQueryHandler(ApplicationDbContext db)
+        public ListInvoicesQueryHandler(IInvoiceRepository repo)
         {
-            _db = db;
+            _repo = repo;
         }
 
-        public async Task<IList<InvoiceLine>> Handle(
-            ListInvoiceLinesQuery request,
-            CancellationToken cancellationToken)
+        public async Task<IList<Invoice>> Handle(ListInvoicesQuery request, CancellationToken cancellationToken)
         {
-            return await _db.InvoiceLines.ToListAsync(cancellationToken);
+            return await _repo.Query().ToListAsync(cancellationToken);
         }
     }
 }

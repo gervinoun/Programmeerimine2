@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace KooliProjekt.Application.Data
 {
-    public class CarType
+    public class CarType : Entity
     {
-        public int Id { get; set; }
+        
 
         [Required]
         public string Name { get; set; }
