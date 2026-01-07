@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace KooliProjekt.Application.Data
 {
-    public class Car
+    public class Car : Entity
     {
-        public int Id { get; set; }
+        
 
         [Required]
         [MaxLength(20)]

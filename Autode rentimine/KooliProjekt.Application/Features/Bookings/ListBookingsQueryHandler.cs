@@ -2,26 +2,24 @@
 using System.Threading;
 using System.Threading.Tasks;
 using KooliProjekt.Application.Data;
+using KooliProjekt.Application.Data.Repositories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace KooliProjekt.Application.Features.Bookings
 {
-    public class ListBookingsQueryHandler
-        : IRequestHandler<ListBookingsQuery, IList<Booking>>
+    public class ListBookingsQueryHandler : IRequestHandler<ListBookingsQuery, IList<Booking>>
     {
-        private readonly ApplicationDbContext _db;
+        private readonly IBookingRepository _repo;
 
-        public ListBookingsQueryHandler(ApplicationDbContext db)
+        public ListBookingsQueryHandler(IBookingRepository repo)
         {
-            _db = db;
+            _repo = repo;
         }
 
-        public async Task<IList<Booking>> Handle(
-            ListBookingsQuery request,
-            CancellationToken cancellationToken)
+        public async Task<IList<Booking>> Handle(ListBookingsQuery request, CancellationToken cancellationToken)
         {
-            return await _db.Bookings.ToListAsync(cancellationToken);
+            return await _repo.Query().ToListAsync(cancellationToken);
         }
     }
 }

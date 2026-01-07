@@ -2,26 +2,24 @@
 using System.Threading;
 using System.Threading.Tasks;
 using KooliProjekt.Application.Data;
+using KooliProjekt.Application.Data.Repositories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace KooliProjekt.Application.Features.CarTypes
 {
-    public class ListCarTypesQueryHandler
-        : IRequestHandler<ListCarTypesQuery, IList<CarType>>
+    public class ListCarTypesQueryHandler : IRequestHandler<ListCarTypesQuery, IList<CarType>>
     {
-        private readonly ApplicationDbContext _db;
+        private readonly ICarTypeRepository _repo;
 
-        public ListCarTypesQueryHandler(ApplicationDbContext db)
+        public ListCarTypesQueryHandler(ICarTypeRepository repo)
         {
-            _db = db;
+            _repo = repo;
         }
 
-        public async Task<IList<CarType>> Handle(
-            ListCarTypesQuery request,
-            CancellationToken cancellationToken)
+        public async Task<IList<CarType>> Handle(ListCarTypesQuery request, CancellationToken cancellationToken)
         {
-            return await _db.CarTypes.ToListAsync(cancellationToken);
+            return await _repo.Query().ToListAsync(cancellationToken);
         }
     }
 }
