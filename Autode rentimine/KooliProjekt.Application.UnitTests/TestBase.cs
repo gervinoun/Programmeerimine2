@@ -3,45 +3,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace KooliProjekt.Application.UnitTests
 {
-    public abstract class ServiceTestBase : IDisposable
+    public class TestBase
     {
-        private ApplicationDbContext _dbContext;
-        private bool disposedValue;
-
-        protected ApplicationDbContext DbContext
+        protected ApplicationDbContext GetFaultyDbContext()
         {
-            get
-            {
-                if (_dbContext != null)
-                {
-                    return _dbContext;
-                }
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>();
 
-                var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                    .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                    .Options;
-                _dbContext = new ApplicationDbContext(options);
-                return _dbContext;
-            }
-        }
+            var dbContext = new ApplicationDbContext(options.Options);
 
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    _dbContext?.Dispose();
-                }
-
-                disposedValue = true;
-            }
-        }
-
-        public void Dispose()
-        {
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
+            return dbContext;
         }
     }
 }

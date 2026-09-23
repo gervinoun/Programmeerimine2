@@ -2,9 +2,11 @@
 using KooliProjekt.Application.Data;
 using MediatR;
 
-namespace KooliProjekt.Application.Features.InvoiceLines
+namespace KooliProjekt.Application.Features.Invoices
 {
-    public class ListInvoiceLinesQuery : IRequest<IList<InvoiceLine>>
+    public class ListInvoicesQuery : IRequest<IList<Invoice>>
     {
+        public int Page { get; set; } = 1;
+        public int PageSize { get; set; } = 10;
     }
 }
