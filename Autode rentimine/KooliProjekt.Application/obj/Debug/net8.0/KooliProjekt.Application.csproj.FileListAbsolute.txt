@@ -42,3 +42,4 @@ C:\Users\gervi\source\repos\gervinoun\Programmeerimine2\Autode rentimine\KooliPr
 C:\Users\gervi\source\repos\gervinoun\Programmeerimine2\Autode rentimine\KooliProjekt.Application\bin\Debug\net8.0\KooliProjekt.Application.pdb
 C:\Users\gervi\source\repos\gervinoun\Programmeerimine2\Autode rentimine\KooliProjekt.Application\obj\Debug\net8.0\KooliProjekt.Application.genruntimeconfig.cache
 C:\Users\gervi\source\repos\gervinoun\Programmeerimine2\Autode rentimine\KooliProjekt.Application\obj\Debug\net8.0\ref\KooliProjekt.Application.dll
+C:\Users\gervi\source\repos\gervinoun\Programmeerimine2\Autode rentimine\KooliProjekt.Application\obj\Debug\net8.0\KooliPro.510B5CE3.Up2Date
