@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
 using KooliProjekt.Application.Data;
@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace KooliProjekt.Application.Features.Users
 {
-
     public class DeleteUserCommandHandler
         : IRequestHandler<DeleteUserCommand, OperationResult>
     {
@@ -16,6 +15,11 @@ namespace KooliProjekt.Application.Features.Users
 
         public DeleteUserCommandHandler(ApplicationDbContext dbContext)
         {
+            if (dbContext == null)
+            {
+                throw new ArgumentNullException(nameof(dbContext));
+            }
+
             _dbContext = dbContext;
         }
 
@@ -23,12 +27,28 @@ namespace KooliProjekt.Application.Features.Users
             DeleteUserCommand request,
             CancellationToken cancellationToken)
         {
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
             var result = new OperationResult();
 
-            await _dbContext
-                .Users
-                .Where(x => x.Id == request.Id)
-                .ExecuteDeleteAsync(cancellationToken);
+            if (request.Id <= 0)
+            {
+                return result;
+            }
+
+            var user = await _dbContext.Users
+                .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
+
+            if (user == null)
+            {
+                return result;
+            }
+
+            _dbContext.Users.Remove(user);
+            await _dbContext.SaveChangesAsync(cancellationToken);
 
             return result;
         }

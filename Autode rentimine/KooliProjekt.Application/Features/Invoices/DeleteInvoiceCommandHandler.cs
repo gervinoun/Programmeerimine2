@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
 using KooliProjekt.Application.Data;
@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace KooliProjekt.Application.Features.Invoices
 {
-
     public class DeleteInvoiceCommandHandler
         : IRequestHandler<DeleteInvoiceCommand, OperationResult>
     {
@@ -16,6 +15,11 @@ namespace KooliProjekt.Application.Features.Invoices
 
         public DeleteInvoiceCommandHandler(ApplicationDbContext dbContext)
         {
+            if (dbContext == null)
+            {
+                throw new ArgumentNullException(nameof(dbContext));
+            }
+
             _dbContext = dbContext;
         }
 
@@ -23,12 +27,28 @@ namespace KooliProjekt.Application.Features.Invoices
             DeleteInvoiceCommand request,
             CancellationToken cancellationToken)
         {
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
             var result = new OperationResult();
 
-            await _dbContext
-                .Invoices
-                .Where(x => x.Id == request.Id)
-                .ExecuteDeleteAsync(cancellationToken);
+            if (request.Id <= 0)
+            {
+                return result;
+            }
+
+            var invoice = await _dbContext.Invoices
+                .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
+
+            if (invoice == null)
+            {
+                return result;
+            }
+
+            _dbContext.Invoices.Remove(invoice);
+            await _dbContext.SaveChangesAsync(cancellationToken);
 
             return result;
         }
