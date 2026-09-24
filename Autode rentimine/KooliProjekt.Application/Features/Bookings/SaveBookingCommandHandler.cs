@@ -16,11 +16,14 @@ namespace KooliProjekt.Application.Features.Bookings
             _repo = repo;
         }
 
-        public async Task<OperationResult> Handle(SaveBookingCommand request, CancellationToken cancellationToken)
+        public async Task<OperationResult> Handle(
+            SaveBookingCommand request,
+            CancellationToken cancellationToken)
         {
             var result = new OperationResult();
 
             Booking booking;
+
             if (request.Id == 0)
             {
                 booking = new Booking();
@@ -28,7 +31,15 @@ namespace KooliProjekt.Application.Features.Bookings
             }
             else
             {
-                booking = await _repo.GetByIdAsync(request.Id, cancellationToken);
+                booking = await _repo.GetByIdAsync(
+                    request.Id,
+                    cancellationToken);
+
+                if (booking == null)
+                {
+                    result.AddError("Booking not found");
+                    return result;
+                }
             }
 
             booking.UserId = request.UserId;

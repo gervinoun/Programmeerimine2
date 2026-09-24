@@ -16,11 +16,14 @@ namespace KooliProjekt.Application.Features.InvoiceLines
             _repo = repo;
         }
 
-        public async Task<OperationResult> Handle(SaveInvoiceLineCommand request, CancellationToken cancellationToken)
+        public async Task<OperationResult> Handle(
+            SaveInvoiceLineCommand request,
+            CancellationToken cancellationToken)
         {
             var result = new OperationResult();
 
             InvoiceLine line;
+
             if (request.Id == 0)
             {
                 line = new InvoiceLine();
@@ -28,7 +31,15 @@ namespace KooliProjekt.Application.Features.InvoiceLines
             }
             else
             {
-                line = await _repo.GetByIdAsync(request.Id, cancellationToken);
+                line = await _repo.GetByIdAsync(
+                    request.Id,
+                    cancellationToken);
+
+                if (line == null)
+                {
+                    result.AddError("Invoice line not found");
+                    return result;
+                }
             }
 
             line.InvoiceId = request.InvoiceId;

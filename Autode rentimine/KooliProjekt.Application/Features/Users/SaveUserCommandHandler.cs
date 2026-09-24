@@ -16,11 +16,14 @@ namespace KooliProjekt.Application.Features.Users
             _repo = repo;
         }
 
-        public async Task<OperationResult> Handle(SaveUserCommand request, CancellationToken cancellationToken)
+        public async Task<OperationResult> Handle(
+            SaveUserCommand request,
+            CancellationToken cancellationToken)
         {
             var result = new OperationResult();
 
             User user;
+
             if (request.Id == 0)
             {
                 user = new User();
@@ -28,7 +31,15 @@ namespace KooliProjekt.Application.Features.Users
             }
             else
             {
-                user = await _repo.GetByIdAsync(request.Id, cancellationToken);
+                user = await _repo.GetByIdAsync(
+                    request.Id,
+                    cancellationToken);
+
+                if (user == null)
+                {
+                    result.AddError("User not found");
+                    return result;
+                }
             }
 
             user.Name = request.Name;

@@ -16,11 +16,14 @@ namespace KooliProjekt.Application.Features.Invoices
             _repo = repo;
         }
 
-        public async Task<OperationResult> Handle(SaveInvoiceCommand request, CancellationToken cancellationToken)
+        public async Task<OperationResult> Handle(
+            SaveInvoiceCommand request,
+            CancellationToken cancellationToken)
         {
             var result = new OperationResult();
 
             Invoice invoice;
+
             if (request.Id == 0)
             {
                 invoice = new Invoice();
@@ -28,7 +31,15 @@ namespace KooliProjekt.Application.Features.Invoices
             }
             else
             {
-                invoice = await _repo.GetByIdAsync(request.Id, cancellationToken);
+                invoice = await _repo.GetByIdAsync(
+                    request.Id,
+                    cancellationToken);
+
+                if (invoice == null)
+                {
+                    result.AddError("Invoice not found");
+                    return result;
+                }
             }
 
             invoice.BookingId = request.BookingId;

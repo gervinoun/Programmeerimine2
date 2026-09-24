@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using KooliProjekt.Application.Data;
 using KooliProjekt.Application.Data.Repositories;
@@ -13,14 +14,28 @@ namespace KooliProjekt.Application.Features.Cars
 
         public SaveCarCommandHandler(ICarRepository repo)
         {
-            _repo = repo;
+            _repo = repo ?? throw new ArgumentNullException(nameof(repo));
         }
 
-        public async Task<OperationResult> Handle(SaveCarCommand request, CancellationToken cancellationToken)
+        public async Task<OperationResult> Handle(
+            SaveCarCommand request,
+            CancellationToken cancellationToken)
         {
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
             var result = new OperationResult();
 
+            if (request.Id < 0)
+            {
+                result.AddPropertyError("Id", "Id must be zero or greater");
+                return result;
+            }
+
             Car car;
+
             if (request.Id == 0)
             {
                 car = new Car();
@@ -28,7 +43,15 @@ namespace KooliProjekt.Application.Features.Cars
             }
             else
             {
-                car = await _repo.GetByIdAsync(request.Id, cancellationToken);
+                car = await _repo.GetByIdAsync(
+                    request.Id,
+                    cancellationToken);
+
+                if (car == null)
+                {
+                    result.AddError("Car not found");
+                    return result;
+                }
             }
 
             car.NumberPlate = request.NumberPlate;

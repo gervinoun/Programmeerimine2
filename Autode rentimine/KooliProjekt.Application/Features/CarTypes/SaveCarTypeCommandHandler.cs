@@ -16,11 +16,14 @@ namespace KooliProjekt.Application.Features.CarTypes
             _repo = repo;
         }
 
-        public async Task<OperationResult> Handle(SaveCarTypeCommand request, CancellationToken cancellationToken)
+        public async Task<OperationResult> Handle(
+            SaveCarTypeCommand request,
+            CancellationToken cancellationToken)
         {
             var result = new OperationResult();
 
             CarType entity;
+
             if (request.Id == 0)
             {
                 entity = new CarType();
@@ -28,7 +31,15 @@ namespace KooliProjekt.Application.Features.CarTypes
             }
             else
             {
-                entity = await _repo.GetByIdAsync(request.Id, cancellationToken);
+                entity = await _repo.GetByIdAsync(
+                    request.Id,
+                    cancellationToken);
+
+                if (entity == null)
+                {
+                    result.AddError("Car type not found");
+                    return result;
+                }
             }
 
             entity.Name = request.Name;
