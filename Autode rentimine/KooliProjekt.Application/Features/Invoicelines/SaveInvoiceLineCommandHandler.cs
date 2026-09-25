@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using KooliProjekt.Application.Data;
 using KooliProjekt.Application.Data.Repositories;
@@ -7,44 +8,62 @@ using MediatR;
 
 namespace KooliProjekt.Application.Features.InvoiceLines
 {
-    public class SaveInvoiceLineCommandHandler : IRequestHandler<SaveInvoiceLineCommand, OperationResult>
+    public class SaveInvoiceLineCommandHandler
+        : IRequestHandler<SaveInvoiceLineCommand, OperationResult>
     {
         private readonly IInvoiceLineRepository _repo;
 
         public SaveInvoiceLineCommandHandler(IInvoiceLineRepository repo)
         {
-            _repo = repo;
+            _repo = repo ?? throw new ArgumentNullException(nameof(repo));
         }
 
         public async Task<OperationResult> Handle(
             SaveInvoiceLineCommand request,
             CancellationToken cancellationToken)
         {
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
             var result = new OperationResult();
 
-            InvoiceLine line;
+            if (request.Id < 0)
+            {
+                result.AddPropertyError(
+                    "Id",
+                    "Id must be zero or greater");
+
+                return result;
+            }
+
+            InvoiceLine invoiceLine;
 
             if (request.Id == 0)
             {
-                line = new InvoiceLine();
-                await _repo.AddAsync(line, cancellationToken);
+                invoiceLine = new InvoiceLine();
+
+                await _repo.AddAsync(
+                    invoiceLine,
+                    cancellationToken);
             }
             else
             {
-                line = await _repo.GetByIdAsync(
+                invoiceLine = await _repo.GetByIdAsync(
                     request.Id,
                     cancellationToken);
 
-                if (line == null)
+                if (invoiceLine == null)
                 {
                     result.AddError("Invoice line not found");
                     return result;
                 }
             }
 
-            line.InvoiceId = request.InvoiceId;
-            line.Description = request.Description;
-            line.Amount = request.Amount;
+            invoiceLine.InvoiceId = request.InvoiceId;
+            invoiceLine.Description = request.Description;
+            invoiceLine.Amount = request.Amount;
 
             await _repo.SaveChangesAsync(cancellationToken);
 

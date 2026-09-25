@@ -150,5 +150,125 @@ namespace KooliProjekt.Application.UnitTests.Features.Cars
             Assert.True(result.HasErrors);
             Assert.NotNull(result.Errors);
         }
+
+        [Fact]
+        public void SaveValidator_should_return_error_when_id_is_negative()
+        {
+            var validator = new SaveCarCommandValidator();
+
+            var command = new SaveCarCommand
+            {
+                Id = -1,
+                NumberPlate = "123ABC",
+                TypeId = 1,
+                Kmrate = 0.50m,
+                TimeRate = 10m
+            };
+
+            var result = validator.Validate(command);
+
+            Assert.False(result.IsValid);
+            Assert.Contains(result.Errors, x => x.PropertyName == "Id");
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData(null)]
+        public void SaveValidator_should_return_error_when_number_plate_is_invalid(string numberPlate)
+        {
+            var validator = new SaveCarCommandValidator();
+
+            var command = new SaveCarCommand
+            {
+                NumberPlate = numberPlate,
+                TypeId = 1,
+                Kmrate = 0.50m,
+                TimeRate = 10m
+            };
+
+            var result = validator.Validate(command);
+
+            Assert.False(result.IsValid);
+            Assert.Contains(result.Errors, x => x.PropertyName == "NumberPlate");
+        }
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(-1)]
+        public void SaveValidator_should_return_error_when_type_id_is_invalid(int typeId)
+        {
+            var validator = new SaveCarCommandValidator();
+
+            var command = new SaveCarCommand
+            {
+                NumberPlate = "123ABC",
+                TypeId = typeId,
+                Kmrate = 0.50m,
+                TimeRate = 10m
+            };
+
+            var result = validator.Validate(command);
+
+            Assert.False(result.IsValid);
+            Assert.Contains(result.Errors, x => x.PropertyName == "TypeId");
+        }
+
+        [Fact]
+        public void SaveValidator_should_return_error_when_kmrate_is_negative()
+        {
+            var validator = new SaveCarCommandValidator();
+
+            var command = new SaveCarCommand
+            {
+                NumberPlate = "123ABC",
+                TypeId = 1,
+                Kmrate = -1m,
+                TimeRate = 10m
+            };
+
+            var result = validator.Validate(command);
+
+            Assert.False(result.IsValid);
+            Assert.Contains(result.Errors, x => x.PropertyName == "Kmrate");
+        }
+
+        [Fact]
+        public void SaveValidator_should_return_error_when_time_rate_is_negative()
+        {
+            var validator = new SaveCarCommandValidator();
+
+            var command = new SaveCarCommand
+            {
+                NumberPlate = "123ABC",
+                TypeId = 1,
+                Kmrate = 0.50m,
+                TimeRate = -1m
+            };
+
+            var result = validator.Validate(command);
+
+            Assert.False(result.IsValid);
+            Assert.Contains(result.Errors, x => x.PropertyName == "TimeRate");
+        }
+
+        [Fact]
+        public void SaveValidator_should_return_true_when_command_is_valid()
+        {
+            var validator = new SaveCarCommandValidator();
+
+            var command = new SaveCarCommand
+            {
+                Id = 0,
+                NumberPlate = "123ABC",
+                TypeId = 1,
+                Kmrate = 0.50m,
+                TimeRate = 10m,
+                IsAvailable = true
+            };
+
+            var result = validator.Validate(command);
+
+            Assert.True(result.IsValid);
+        }
     }
 }

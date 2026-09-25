@@ -98,5 +98,96 @@ namespace KooliProjekt.Application.UnitTests.Features.InvoiceLines
             Assert.True(result.HasErrors);
             Assert.NotNull(result.Errors);
         }
+
+        [Fact]
+        public void SaveValidator_should_return_error_when_id_is_negative()
+        {
+            var validator = new SaveInvoiceLineCommandValidator();
+
+            var command = CreateValidCommand();
+            command.Id = -1;
+
+            var result = validator.Validate(command);
+
+            Assert.False(result.IsValid);
+            Assert.Contains(
+                result.Errors,
+                x => x.PropertyName == "Id");
+        }
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(-1)]
+        public void SaveValidator_should_return_error_when_invoice_id_is_invalid(int invoiceId)
+        {
+            var validator = new SaveInvoiceLineCommandValidator();
+
+            var command = CreateValidCommand();
+            command.InvoiceId = invoiceId;
+
+            var result = validator.Validate(command);
+
+            Assert.False(result.IsValid);
+            Assert.Contains(
+                result.Errors,
+                x => x.PropertyName == "InvoiceId");
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData(null)]
+        public void SaveValidator_should_return_error_when_description_is_invalid(string description)
+        {
+            var validator = new SaveInvoiceLineCommandValidator();
+
+            var command = CreateValidCommand();
+            command.Description = description;
+
+            var result = validator.Validate(command);
+
+            Assert.False(result.IsValid);
+            Assert.Contains(
+                result.Errors,
+                x => x.PropertyName == "Description");
+        }
+
+        [Fact]
+        public void SaveValidator_should_return_error_when_amount_is_negative()
+        {
+            var validator = new SaveInvoiceLineCommandValidator();
+
+            var command = CreateValidCommand();
+            command.Amount = -1m;
+
+            var result = validator.Validate(command);
+
+            Assert.False(result.IsValid);
+            Assert.Contains(
+                result.Errors,
+                x => x.PropertyName == "Amount");
+        }
+
+        [Fact]
+        public void SaveValidator_should_return_true_when_command_is_valid()
+        {
+            var validator = new SaveInvoiceLineCommandValidator();
+
+            var command = CreateValidCommand();
+
+            var result = validator.Validate(command);
+
+            Assert.True(result.IsValid);
+        }
+
+        private SaveInvoiceLineCommand CreateValidCommand()
+        {
+            return new SaveInvoiceLineCommand
+            {
+                Id = 0,
+                InvoiceId = 1,
+                Description = "Rental time",
+                Amount = 50.25m
+            };
+        }
     }
 }

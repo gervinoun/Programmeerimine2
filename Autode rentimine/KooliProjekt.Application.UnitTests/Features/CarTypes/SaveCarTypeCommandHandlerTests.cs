@@ -89,5 +89,61 @@ namespace KooliProjekt.Application.UnitTests.Features.CarTypes
             Assert.True(result.HasErrors);
             Assert.NotNull(result.Errors);
         }
+
+        [Fact]
+        public void SaveValidator_should_return_error_when_id_is_negative()
+        {
+            var validator = new SaveCarTypeCommandValidator();
+
+            var command = new SaveCarTypeCommand
+            {
+                Id = -1,
+                Name = "SUV"
+            };
+
+            var result = validator.Validate(command);
+
+            Assert.False(result.IsValid);
+            Assert.Contains(
+                result.Errors,
+                x => x.PropertyName == "Id");
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData(null)]
+        public void SaveValidator_should_return_error_when_name_is_invalid(string name)
+        {
+            var validator = new SaveCarTypeCommandValidator();
+
+            var command = new SaveCarTypeCommand
+            {
+                Id = 0,
+                Name = name
+            };
+
+            var result = validator.Validate(command);
+
+            Assert.False(result.IsValid);
+            Assert.Contains(
+                result.Errors,
+                x => x.PropertyName == "Name");
+        }
+
+        [Fact]
+        public void SaveValidator_should_return_true_when_command_is_valid()
+        {
+            var validator = new SaveCarTypeCommandValidator();
+
+            var command = new SaveCarTypeCommand
+            {
+                Id = 0,
+                Name = "SUV"
+            };
+
+            var result = validator.Validate(command);
+
+            Assert.True(result.IsValid);
+        }
     }
 }

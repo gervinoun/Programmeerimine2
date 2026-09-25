@@ -99,5 +99,94 @@ namespace KooliProjekt.Application.UnitTests.Features.Invoices
             Assert.True(result.HasErrors);
             Assert.NotNull(result.Errors);
         }
+
+        [Fact]
+        public void SaveValidator_should_return_error_when_id_is_negative()
+        {
+            var validator = new SaveInvoiceCommandValidator();
+
+            var command = CreateValidCommand();
+            command.Id = -1;
+
+            var result = validator.Validate(command);
+
+            Assert.False(result.IsValid);
+            Assert.Contains(
+                result.Errors,
+                x => x.PropertyName == "Id");
+        }
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(-1)]
+        public void SaveValidator_should_return_error_when_booking_id_is_invalid(int bookingId)
+        {
+            var validator = new SaveInvoiceCommandValidator();
+
+            var command = CreateValidCommand();
+            command.BookingId = bookingId;
+
+            var result = validator.Validate(command);
+
+            Assert.False(result.IsValid);
+            Assert.Contains(
+                result.Errors,
+                x => x.PropertyName == "BookingId");
+        }
+
+        [Fact]
+        public void SaveValidator_should_return_error_when_invoice_date_is_empty()
+        {
+            var validator = new SaveInvoiceCommandValidator();
+
+            var command = CreateValidCommand();
+            command.InvoiceDate = default;
+
+            var result = validator.Validate(command);
+
+            Assert.False(result.IsValid);
+            Assert.Contains(
+                result.Errors,
+                x => x.PropertyName == "InvoiceDate");
+        }
+
+        [Fact]
+        public void SaveValidator_should_return_error_when_total_is_negative()
+        {
+            var validator = new SaveInvoiceCommandValidator();
+
+            var command = CreateValidCommand();
+            command.Total = -1m;
+
+            var result = validator.Validate(command);
+
+            Assert.False(result.IsValid);
+            Assert.Contains(
+                result.Errors,
+                x => x.PropertyName == "Total");
+        }
+
+        [Fact]
+        public void SaveValidator_should_return_true_when_command_is_valid()
+        {
+            var validator = new SaveInvoiceCommandValidator();
+
+            var command = CreateValidCommand();
+
+            var result = validator.Validate(command);
+
+            Assert.True(result.IsValid);
+        }
+
+        private SaveInvoiceCommand CreateValidCommand()
+        {
+            return new SaveInvoiceCommand
+            {
+                Id = 0,
+                BookingId = 1,
+                InvoiceDate = new DateTime(2026, 2, 5),
+                Total = 150.50m
+            };
+        }
     }
 }
