@@ -1,17 +1,17 @@
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace KooliProjekt.WindowsForms.Api
 {
     public class OperationResultResponse
     {
-        [JsonPropertyName("propertyErrors")]
+        [JsonProperty("propertyErrors")]
         public IDictionary<string, string> PropertyErrors { get; set; }
 
-        [JsonPropertyName("errors")]
+        [JsonProperty("errors")]
         public IList<string> Errors { get; set; }
 
-        [JsonPropertyName("hasErrors")]
+        [JsonProperty("hasErrors")]
         public bool HasErrors { get; set; }
     }
 }

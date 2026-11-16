@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Net.Http.Json;
+using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace KooliProjekt.WindowsForms.Api
 {
@@ -23,21 +24,47 @@ namespace KooliProjekt.WindowsForms.Api
                 requestUri += $"&numberPlate={Uri.EscapeDataString(numberPlate)}";
             }
 
-            return await _httpClient.GetFromJsonAsync<List<Car>>(requestUri);
+            using var response = await _httpClient.GetAsync(requestUri);
+            response.EnsureSuccessStatusCode();
+            var json = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<List<Car>>(json);
         }
 
         public async Task<OperationResultResponse> Save(Car car)
         {
-            using var response = await _httpClient.PostAsJsonAsync("api/Cars", car);
-            response.EnsureSuccessStatusCode();
-            return await response.Content.ReadFromJsonAsync<OperationResultResponse>();
+            var json = JsonConvert.SerializeObject(car);
+            using var content = new StringContent(json, Encoding.UTF8, "application/json");
+            using var response = await _httpClient.PostAsync("api/Cars", content);
+            return await ReadOperationResult(response);
         }
 
         public async Task<OperationResultResponse> Delete(int id)
         {
             using var response = await _httpClient.DeleteAsync($"api/Cars/{id}");
-            response.EnsureSuccessStatusCode();
-            return await response.Content.ReadFromJsonAsync<OperationResultResponse>();
+            return await ReadOperationResult(response);
+        }
+
+        private static async Task<OperationResultResponse> ReadOperationResult(HttpResponseMessage response)
+        {
+            var json = await response.Content.ReadAsStringAsync();
+            OperationResultResponse result;
+
+            try
+            {
+                result = JsonConvert.DeserializeObject<OperationResultResponse>(json);
+            }
+            catch (JsonException)
+            {
+                response.EnsureSuccessStatusCode();
+                throw;
+            }
+
+            if (!response.IsSuccessStatusCode && result?.HasErrors != true)
+            {
+                response.EnsureSuccessStatusCode();
+            }
+
+            return result;
         }
     }
 }

@@ -1,7 +1,7 @@
 using System.Globalization;
 using System.Net.Http;
-using System.Text.Json;
 using KooliProjekt.WindowsForms.Api;
+using Newtonsoft.Json;
 
 namespace KooliProjekt.WindowsForms
 {
