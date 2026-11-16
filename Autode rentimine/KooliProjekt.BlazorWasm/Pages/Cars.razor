@@ -1,0 +1,78 @@
+@page "/cars"
+@inject IApiClient ApiClient
+@using KooliProjekt.BlazorWasm.Api
+
+<PageTitle>Cars</PageTitle>
+
+<h1>Cars</h1>
+
+@if (isLoading)
+{
+	<p><em>Loading cars...</em></p>
+}
+else if (!string.IsNullOrWhiteSpace(errorMessage))
+{
+	<div class="alert alert-danger" role="alert">@errorMessage</div>
+}
+else if (cars.Count == 0)
+{
+	<p>No cars were found.</p>
+}
+else
+{
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th scope="col">ID</th>
+				<th scope="col">Number plate</th>
+				<th scope="col">Type ID</th>
+				<th scope="col">Km rate</th>
+				<th scope="col">Time rate</th>
+				<th scope="col">Available</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var car in cars)
+			{
+				<tr>
+					<td>@car.Id</td>
+					<td>@car.NumberPlate</td>
+					<td>@car.TypeId</td>
+					<td>@car.Kmrate</td>
+					<td>@car.TimeRate</td>
+					<td>@(car.IsAvailable ? "Yes" : "No")</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+
+@code {
+	private IList<Car> cars = new List<Car>();
+	private bool isLoading = true;
+	private string errorMessage;
+
+	protected override async Task OnInitializedAsync()
+	{
+		try
+		{
+			cars = await ApiClient.List();
+		}
+		catch (HttpRequestException)
+		{
+			errorMessage = "Unable to load cars from the Web API. Verify that it is running at http://localhost:5086.";
+		}
+		catch (TaskCanceledException)
+		{
+			errorMessage = "The request to load cars timed out.";
+		}
+		catch (System.Text.Json.JsonException)
+		{
+			errorMessage = "The Web API returned data in an unexpected format.";
+		}
+		finally
+		{
+			isLoading = false;
+		}
+	}
+}

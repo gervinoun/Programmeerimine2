@@ -16,6 +16,16 @@ namespace KooliProjekt.WebAPI
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("BlazorDevelopment", policy =>
+                {
+                    policy.WithOrigins("http://localhost:5258")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
+
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -51,6 +61,7 @@ namespace KooliProjekt.WebAPI
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
+                app.UseCors("BlazorDevelopment");
             }
 
             app.UseAuthorization();
