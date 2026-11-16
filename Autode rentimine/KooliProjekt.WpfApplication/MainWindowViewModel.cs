@@ -1,13 +1,11 @@
 ﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Net.Http;
-using System.Runtime.CompilerServices;
 using KooliProjekt.WpfApplication.Api;
 using Newtonsoft.Json;
 
 namespace KooliProjekt.WpfApplication
 {
-    public class MainWindowViewModel : INotifyPropertyChanged
+    public class MainWindowViewModel : NotifyPropertyChangedBase
     {
         private readonly IApiClient _apiClient;
         private Car _selectedCar;
@@ -28,7 +26,7 @@ namespace KooliProjekt.WpfApplication
                 if (!ReferenceEquals(_selectedCar, value))
                 {
                     _selectedCar = value;
-                    OnPropertyChanged();
+                    NotifyPropertyChanged();
                 }
             }
         }
@@ -41,12 +39,10 @@ namespace KooliProjekt.WpfApplication
                 if (_errorMessage != value)
                 {
                     _errorMessage = value;
-                    OnPropertyChanged();
+                    NotifyPropertyChanged();
                 }
             }
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public async Task LoadCarsAsync()
         {
@@ -80,9 +76,5 @@ namespace KooliProjekt.WpfApplication
             }
         }
 
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
     }
 }

@@ -15,6 +15,7 @@
         <DataGrid x:Name="CarsDataGrid"
                   Grid.Column="0"
                   AutoGenerateColumns="False"
+                  CanUserAddRows="False"
                   IsReadOnly="True"
                   SelectionMode="Single"
                   SelectionUnit="FullRow"

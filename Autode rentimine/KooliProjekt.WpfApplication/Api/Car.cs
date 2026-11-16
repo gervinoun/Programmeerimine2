@@ -1,10 +1,8 @@
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+using KooliProjekt.WpfApplication;
 
 namespace KooliProjekt.WpfApplication.Api
 {
-    public class Car : INotifyPropertyChanged
+    public class Car : NotifyPropertyChangedBase
     {
         private int _id;
         private string _numberPlate;
@@ -16,51 +14,79 @@ namespace KooliProjekt.WpfApplication.Api
         public int Id
         {
             get => _id;
-            set => SetProperty(ref _id, value);
+            set
+            {
+                if (_id != value)
+                {
+                    _id = value;
+                    NotifyPropertyChanged();
+                }
+            }
         }
 
         public string NumberPlate
         {
             get => _numberPlate;
-            set => SetProperty(ref _numberPlate, value);
+            set
+            {
+                if (_numberPlate != value)
+                {
+                    _numberPlate = value;
+                    NotifyPropertyChanged();
+                }
+            }
         }
 
         public int TypeId
         {
             get => _typeId;
-            set => SetProperty(ref _typeId, value);
+            set
+            {
+                if (_typeId != value)
+                {
+                    _typeId = value;
+                    NotifyPropertyChanged();
+                }
+            }
         }
 
         public decimal Kmrate
         {
             get => _kmrate;
-            set => SetProperty(ref _kmrate, value);
+            set
+            {
+                if (_kmrate != value)
+                {
+                    _kmrate = value;
+                    NotifyPropertyChanged();
+                }
+            }
         }
 
         public decimal TimeRate
         {
             get => _timeRate;
-            set => SetProperty(ref _timeRate, value);
+            set
+            {
+                if (_timeRate != value)
+                {
+                    _timeRate = value;
+                    NotifyPropertyChanged();
+                }
+            }
         }
 
         public bool IsAvailable
         {
             get => _isAvailable;
-            set => SetProperty(ref _isAvailable, value);
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private bool SetProperty<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
-        {
-            if (EqualityComparer<T>.Default.Equals(field, value))
+            set
             {
-                return false;
+                if (_isAvailable != value)
+                {
+                    _isAvailable = value;
+                    NotifyPropertyChanged();
+                }
             }
-
-            field = value;
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            return true;
         }
     }
 }
