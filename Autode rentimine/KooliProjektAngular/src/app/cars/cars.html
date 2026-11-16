@@ -1,0 +1,38 @@
+<section aria-labelledby="cars-heading">
+  <h2 id="cars-heading">Cars</h2>
+
+  @if (isLoading()) {
+    <p role="status">Loading cars...</p>
+  } @else if (errorMessage(); as message) {
+    <p class="error" role="alert">{{ message }}</p>
+  } @else if (cars().length === 0) {
+    <p>No cars were found.</p>
+  } @else {
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Number plate</th>
+            <th scope="col">Type ID</th>
+            <th scope="col">Km rate</th>
+            <th scope="col">Time rate</th>
+            <th scope="col">Available</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (car of cars(); track car.id) {
+            <tr>
+              <td>{{ car.id }}</td>
+              <td>{{ car.numberPlate }}</td>
+              <td>{{ car.typeId }}</td>
+              <td>{{ car.kmrate }}</td>
+              <td>{{ car.timeRate }}</td>
+              <td>{{ car.isAvailable ? 'Yes' : 'No' }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</section>

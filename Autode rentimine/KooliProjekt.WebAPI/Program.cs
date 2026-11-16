@@ -20,7 +20,7 @@ namespace KooliProjekt.WebAPI
             {
                 options.AddPolicy("BlazorDevelopment", policy =>
                 {
-                    policy.WithOrigins("http://localhost:5258")
+                    policy.WithOrigins("http://localhost:5258", "http://localhost:4200")
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });
