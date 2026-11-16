@@ -3,7 +3,6 @@
 @inject IApiClient ApiClient
 @inject NavigationManager Navigation
 @using System.Globalization
-@using System.ComponentModel.DataAnnotations
 @using KooliProjekt.BlazorWasm.Api
 
 <PageTitle>@(IsEdit ? "Edit car" : "Add car")</PageTitle>
@@ -21,14 +20,8 @@ else if (!string.IsNullOrWhiteSpace(loadError))
 }
 else if (editContext is not null)
 {
-	<EditForm EditContext="editContext" OnValidSubmit="SaveAsync">
-		<DataAnnotationsValidator />
+	<EditForm EditContext="editContext" OnSubmit="SaveAsync">
 		<ValidationSummary />
-
-		@if (!string.IsNullOrWhiteSpace(serverError))
-		{
-			<div class="alert alert-danger" role="alert">@serverError</div>
-		}
 
 		<div class="mb-3">
 			<label for="numberPlate" class="form-label">Number plate</label>
@@ -72,7 +65,6 @@ else if (editContext is not null)
 	private string kmrateText = "0";
 	private string timeRateText = "0";
 	private string loadError;
-	private string serverError;
 	private bool isLoading = true;
 	private bool isSaving;
 	private bool IsEdit => Id.HasValue;
@@ -81,7 +73,6 @@ else if (editContext is not null)
 	{
 		isLoading = true;
 		loadError = null;
-		serverError = null;
 
 		try
 		{
@@ -130,7 +121,7 @@ else if (editContext is not null)
 		}
 	}
 
-	private async Task SaveAsync()
+	private async Task SaveAsync(EditContext _)
 	{
 		if (isSaving || editContext is null)
 		{
@@ -138,8 +129,8 @@ else if (editContext is not null)
 		}
 
 		isSaving = true;
-		serverError = null;
 		validationMessages.Clear();
+		editContext.NotifyValidationStateChanged();
 
 		try
 		{
@@ -156,22 +147,34 @@ else if (editContext is not null)
 			var result = await ApiClient.Save(car);
 			if (result is null)
 			{
-				serverError = "The Web API returned an empty Save response.";
+				validationMessages.Add(new FieldIdentifier(car, string.Empty), "The Web API returned an empty Save response.");
+				editContext.NotifyValidationStateChanged();
 				return;
 			}
 
 			var hasErrors = result.HasErrors || result.Errors?.Count > 0 || result.PropertyErrors?.Count > 0;
 			if (hasErrors)
 			{
-				serverError = string.Join(Environment.NewLine, result.Errors ?? Array.Empty<string>());
+				foreach (var error in result.Errors ?? Array.Empty<string>())
+				{
+					validationMessages.Add(new FieldIdentifier(car, string.Empty), error);
+				}
+
 				foreach (var error in result.PropertyErrors ?? new Dictionary<string, string>())
 				{
 					var field = GetFieldIdentifier(error.Key);
-					validationMessages.Add(field, error.Value);
+					if (string.IsNullOrEmpty(field.FieldName))
+					{
+						validationMessages.Add(new FieldIdentifier(car, string.Empty), error.Value);
+					}
+					else
+					{
+						validationMessages.Add(field, error.Value);
+					}
 				}
-				if (string.IsNullOrWhiteSpace(serverError) && (result.PropertyErrors?.Count ?? 0) > 0)
+				if (!editContext.GetValidationMessages().Any())
 				{
-					serverError = "Please correct the highlighted fields.";
+					validationMessages.Add(new FieldIdentifier(car, string.Empty), "The Web API rejected the car without providing validation details.");
 				}
 
 				editContext.NotifyValidationStateChanged();
@@ -182,19 +185,23 @@ else if (editContext is not null)
 		}
 		catch (HttpRequestException exception)
 		{
-			serverError = $"Unable to save the car: {exception.Message}";
+			validationMessages.Add(new FieldIdentifier(car, string.Empty), $"Unable to save the car: {exception.Message}");
+			editContext.NotifyValidationStateChanged();
 		}
 		catch (TaskCanceledException)
 		{
-			serverError = "The request to save the car timed out.";
+			validationMessages.Add(new FieldIdentifier(car, string.Empty), "The request to save the car timed out.");
+			editContext.NotifyValidationStateChanged();
 		}
 		catch (System.Text.Json.JsonException)
 		{
-			serverError = "The Web API returned a Save response in an unexpected format.";
+			validationMessages.Add(new FieldIdentifier(car, string.Empty), "The Web API returned a Save response in an unexpected format.");
+			editContext.NotifyValidationStateChanged();
 		}
 		finally
 		{
 			isSaving = false;
+			editContext.NotifyValidationStateChanged();
 		}
 	}
 
@@ -219,25 +226,22 @@ else if (editContext is not null)
 			return false;
 		}
 
-		if (value < 0)
-		{
-			validationMessages.Add(new FieldIdentifier(car, propertyName), "The rate must be zero or greater.");
-			return false;
-		}
-
 		return true;
 	}
 
 	private FieldIdentifier GetFieldIdentifier(string propertyName)
 	{
-		return propertyName switch
-		{
-			nameof(Car.NumberPlate) => new FieldIdentifier(car, nameof(Car.NumberPlate)),
-			nameof(Car.TypeId) => new FieldIdentifier(car, nameof(Car.TypeId)),
-			nameof(Car.Kmrate) => new FieldIdentifier(car, nameof(Car.Kmrate)),
-			nameof(Car.TimeRate) => new FieldIdentifier(car, nameof(Car.TimeRate)),
-			nameof(Car.IsAvailable) => new FieldIdentifier(car, nameof(Car.IsAvailable)),
-			_ => new FieldIdentifier(car, string.Empty)
-		};
+		if (string.Equals(propertyName, nameof(Car.NumberPlate), StringComparison.OrdinalIgnoreCase))
+			return new FieldIdentifier(car, nameof(Car.NumberPlate));
+		if (string.Equals(propertyName, nameof(Car.TypeId), StringComparison.OrdinalIgnoreCase))
+			return new FieldIdentifier(car, nameof(Car.TypeId));
+		if (string.Equals(propertyName, nameof(Car.Kmrate), StringComparison.OrdinalIgnoreCase))
+			return new FieldIdentifier(car, nameof(Car.Kmrate));
+		if (string.Equals(propertyName, nameof(Car.TimeRate), StringComparison.OrdinalIgnoreCase))
+			return new FieldIdentifier(car, nameof(Car.TimeRate));
+		if (string.Equals(propertyName, nameof(Car.IsAvailable), StringComparison.OrdinalIgnoreCase))
+			return new FieldIdentifier(car, nameof(Car.IsAvailable));
+
+		return new FieldIdentifier(car, string.Empty);
 	}
 }
