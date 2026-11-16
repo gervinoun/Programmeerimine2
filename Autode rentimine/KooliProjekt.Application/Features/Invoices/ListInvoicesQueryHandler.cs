@@ -36,7 +36,23 @@ namespace KooliProjekt.Application.Features.Invoices
             if (request.PageSize > MaxPageSize)
                 throw new ArgumentException($"PageSize ei tohi olla suurem kui {MaxPageSize}.", nameof(request.PageSize));
 
-            return await _repo.Query()
+            var invoices = _repo.Query();
+            if (request.BookingId.HasValue)
+            {
+                invoices = invoices.Where(invoice => invoice.BookingId == request.BookingId.Value);
+            }
+
+            if (request.InvoiceDate.HasValue)
+            {
+                invoices = invoices.Where(invoice => invoice.InvoiceDate == request.InvoiceDate.Value);
+            }
+
+            if (request.Total.HasValue)
+            {
+                invoices = invoices.Where(invoice => invoice.Total == request.Total.Value);
+            }
+
+            return await invoices
                 .OrderBy(x => x.Id)
                 .Skip((request.Page - 1) * request.PageSize)
                 .Take(request.PageSize)

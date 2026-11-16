@@ -1,10 +1,48 @@
-﻿using KooliProjekt.Application.Data.Repositories;
+﻿using KooliProjekt.Application.Data;
+using KooliProjekt.Application.Data.Repositories;
 using KooliProjekt.Application.Features.CarTypes;
 
 namespace KooliProjekt.Application.UnitTests.Features.CarTypes
 {
     public class ListCarTypesQueryHandlerTests : TestBase
     {
+        [Fact]
+        public async Task List_should_filter_by_name_case_insensitively()
+        {
+            await SeedCarTypes();
+
+            var handler = CreateHandler();
+            var result = await handler.Handle(
+                new ListCarTypesQuery { Name = "suV" },
+                CancellationToken.None);
+
+            Assert.Equal("SUV", Assert.Single(result).Name);
+        }
+
+        [Fact]
+        public async Task List_should_return_all_car_types_when_name_is_omitted()
+        {
+            await SeedCarTypes();
+
+            var handler = CreateHandler();
+            var result = await handler.Handle(new ListCarTypesQuery(), CancellationToken.None);
+
+            Assert.Equal(2, result.Count);
+        }
+
+        [Fact]
+        public async Task List_should_return_empty_when_name_has_no_match()
+        {
+            await SeedCarTypes();
+
+            var handler = CreateHandler();
+            var result = await handler.Handle(
+                new ListCarTypesQuery { Name = "truck" },
+                CancellationToken.None);
+
+            Assert.Empty(result);
+        }
+
         [Fact]
         public async Task List_should_throw_ArgumentNullException_when_request_is_null()
         {
@@ -74,6 +112,19 @@ namespace KooliProjekt.Application.UnitTests.Features.CarTypes
 
             await Assert.ThrowsAsync<ArgumentException>(() =>
                 handler.Handle(query, CancellationToken.None));
+        }
+
+        private ListCarTypesQueryHandler CreateHandler()
+        {
+            return new ListCarTypesQueryHandler(new CarTypeRepository(DbContext));
+        }
+
+        private async Task SeedCarTypes()
+        {
+            DbContext.CarTypes.AddRange(
+                new CarType { Name = "SUV" },
+                new CarType { Name = "Sedan" });
+            await DbContext.SaveChangesAsync();
         }
     }
 }

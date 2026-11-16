@@ -1,10 +1,48 @@
-﻿using KooliProjekt.Application.Data.Repositories;
+﻿using KooliProjekt.Application.Data;
+using KooliProjekt.Application.Data.Repositories;
 using KooliProjekt.Application.Features.InvoiceLines;
 
 namespace KooliProjekt.Application.UnitTests.Features.InvoiceLines
 {
     public class ListInvoiceLinesQueryHandlerTests : TestBase
     {
+        [Fact]
+        public async Task List_should_filter_by_description_case_insensitively()
+        {
+            await SeedInvoiceLines();
+
+            var handler = CreateHandler();
+            var result = await handler.Handle(
+                new ListInvoiceLinesQuery { Description = "RENTAL" },
+                CancellationToken.None);
+
+            Assert.Equal("Monthly rental", Assert.Single(result).Description);
+        }
+
+        [Fact]
+        public async Task List_should_return_all_invoice_lines_when_description_is_omitted()
+        {
+            await SeedInvoiceLines();
+
+            var handler = CreateHandler();
+            var result = await handler.Handle(new ListInvoiceLinesQuery(), CancellationToken.None);
+
+            Assert.Equal(2, result.Count);
+        }
+
+        [Fact]
+        public async Task List_should_return_empty_when_description_has_no_match()
+        {
+            await SeedInvoiceLines();
+
+            var handler = CreateHandler();
+            var result = await handler.Handle(
+                new ListInvoiceLinesQuery { Description = "fuel" },
+                CancellationToken.None);
+
+            Assert.Empty(result);
+        }
+
         [Fact]
         public async Task List_should_throw_ArgumentNullException_when_request_is_null()
         {
@@ -74,6 +112,19 @@ namespace KooliProjekt.Application.UnitTests.Features.InvoiceLines
 
             await Assert.ThrowsAsync<ArgumentException>(() =>
                 handler.Handle(query, CancellationToken.None));
+        }
+
+        private ListInvoiceLinesQueryHandler CreateHandler()
+        {
+            return new ListInvoiceLinesQueryHandler(new InvoiceLineRepository(DbContext));
+        }
+
+        private async Task SeedInvoiceLines()
+        {
+            DbContext.InvoiceLines.AddRange(
+                new InvoiceLine { InvoiceId = 10, Description = "Monthly rental", Amount = 100m },
+                new InvoiceLine { InvoiceId = 11, Description = "Cleaning fee", Amount = 25m });
+            await DbContext.SaveChangesAsync();
         }
     }
 }

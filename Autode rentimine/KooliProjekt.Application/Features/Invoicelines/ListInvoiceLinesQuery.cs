@@ -6,6 +6,7 @@ namespace KooliProjekt.Application.Features.InvoiceLines
 {
     public class ListInvoiceLinesQuery : IRequest<IList<InvoiceLine>>
     {
+        public string Description { get; set; }
         public int Page { get; set; } = 1;
         public int PageSize { get; set; } = 10;
     }

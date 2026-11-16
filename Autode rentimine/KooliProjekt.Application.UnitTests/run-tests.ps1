@@ -1,17 +1,48 @@
 dotnet tool install -g dotnet-reportgenerator-globaltool
-$TestOutput = dotnet test --collect "XPlat Code Coverage" --results-directory ./BuildReports/UnitTests
-$TestReportsParts = $TestOutput | Select-String coverage.cobertura.xml | ForEach-Object { $_.Line.Trim() }
-$TestReportsCrappy = ($TestReportsParts -join ';')
 
-$guid_regex = "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}" 
-$TestReports = $TestReportsCrappy -replace $guid_regex
-$TestReports = $TestReports.Replace("//","/").Replace('\\','\') #.Replace("\\UnitTests","\\Coverage")
+$Project = Join-Path $PSScriptRoot "KooliProjekt.Application.UnitTests.csproj"
+$UnitTestsDir = Join-Path $PSScriptRoot "BuildReports\UnitTests"
+$CoverageDir = Join-Path $PSScriptRoot "BuildReports\Coverage"
 
-copy $TestReportsCrappy $TestReports
-del $TestReportsCrappy
+if (Test-Path $UnitTestsDir) {
+    Remove-Item $UnitTestsDir -Recurse -Force
+}
 
-Get-ChildItem -Path ./BuildReports/UnitTests -Directory -Recurse | Remove-Item -Force  
+if (Test-Path $CoverageDir) {
+    Remove-Item $CoverageDir -Recurse -Force
+}
 
-reportgenerator "-reports:$TestReports" "-targetdir:.//BuildReports//Coverage" "-reporttype:Html" "-classfilters:-AspNetCoreGeneratedDocument.*"
+dotnet test $Project `
+    --collect "XPlat Code Coverage" `
+    --results-directory $UnitTestsDir
 
-start "BuildReports\Coverage\index.htm"
+$CoverageFile = Get-ChildItem `
+    -Path $UnitTestsDir `
+    -Filter "coverage.cobertura.xml" `
+    -Recurse |
+    Select-Object -First 1
+
+if ($null -eq $CoverageFile) {
+    Write-Host "ERROR: coverage.cobertura.xml faili ei leitud."
+    exit 1
+}
+
+Write-Host ""
+Write-Host "Coverage file:"
+Write-Host $CoverageFile.FullName
+
+reportgenerator `
+    "-reports:$($CoverageFile.FullName)" `
+    "-targetdir:$CoverageDir" `
+    "-reporttype:Html" `
+    "-filefilters:-**/Behaviors/**;-**/Data/**;-**/Dto/**;-**/Infrastructure/**;-**/Migrations/**" `
+    "-classfilters:-AspNetCoreGeneratedDocument.*;-*Command;-*Query"
+
+$Report = Join-Path $CoverageDir "index.htm"
+
+if (Test-Path $Report) {
+    Start-Process $Report
+}
+else {
+    Write-Host "ERROR: Coverage HTML reporti ei leitud."
+}

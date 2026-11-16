@@ -6,6 +6,7 @@ namespace KooliProjekt.Application.Features.Bookings
 {
     public class ListBookingsQuery : IRequest<IList<Booking>>
     {
+        public string Status { get; set; }
         public int Page { get; set; } = 1;
         public int PageSize { get; set; } = 10;
     }

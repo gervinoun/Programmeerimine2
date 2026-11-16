@@ -36,7 +36,14 @@ namespace KooliProjekt.Application.Features.InvoiceLines
             if (request.PageSize > MaxPageSize)
                 throw new ArgumentException($"PageSize ei tohi olla suurem kui {MaxPageSize}.", nameof(request.PageSize));
 
-            return await _repo.Query()
+            var invoiceLines = _repo.Query();
+            if (!string.IsNullOrWhiteSpace(request.Description))
+            {
+                var description = request.Description.Trim().ToLower();
+                invoiceLines = invoiceLines.Where(line => line.Description.ToLower().Contains(description));
+            }
+
+            return await invoiceLines
                 .OrderBy(x => x.Id)
                 .Skip((request.Page - 1) * request.PageSize)
                 .Take(request.PageSize)

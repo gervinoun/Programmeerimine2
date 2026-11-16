@@ -36,7 +36,14 @@ namespace KooliProjekt.Application.Features.Bookings
             if (request.PageSize > MaxPageSize)
                 throw new ArgumentException($"PageSize ei tohi olla suurem kui {MaxPageSize}.", nameof(request.PageSize));
 
-            return await _repo.Query()
+            var bookings = _repo.Query();
+            if (!string.IsNullOrWhiteSpace(request.Status))
+            {
+                var status = request.Status.Trim().ToLower();
+                bookings = bookings.Where(booking => booking.Status.ToLower().Contains(status));
+            }
+
+            return await bookings
                 .OrderBy(x => x.Id)
                 .Skip((request.Page - 1) * request.PageSize)
                 .Take(request.PageSize)

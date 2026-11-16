@@ -36,7 +36,20 @@ namespace KooliProjekt.Application.Features.Users
             if (request.PageSize > MaxPageSize)
                 throw new ArgumentException($"PageSize ei tohi olla suurem kui {MaxPageSize}.", nameof(request.PageSize));
 
-            return await _repo.Query()
+            var users = _repo.Query();
+            if (!string.IsNullOrWhiteSpace(request.Name))
+            {
+                var name = request.Name.Trim().ToLower();
+                users = users.Where(user => user.Name.ToLower().Contains(name));
+            }
+
+            if (!string.IsNullOrWhiteSpace(request.Email))
+            {
+                var email = request.Email.Trim().ToLower();
+                users = users.Where(user => user.Email.ToLower().Contains(email));
+            }
+
+            return await users
                 .OrderBy(x => x.Id)
                 .Skip((request.Page - 1) * request.PageSize)
                 .Take(request.PageSize)

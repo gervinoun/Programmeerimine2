@@ -36,7 +36,14 @@ namespace KooliProjekt.Application.Features.CarTypes
             if (request.PageSize > MaxPageSize)
                 throw new ArgumentException($"PageSize ei tohi olla suurem kui {MaxPageSize}.", nameof(request.PageSize));
 
-            return await _repo.Query()
+            var carTypes = _repo.Query();
+            if (!string.IsNullOrWhiteSpace(request.Name))
+            {
+                var name = request.Name.Trim().ToLower();
+                carTypes = carTypes.Where(carType => carType.Name.ToLower().Contains(name));
+            }
+
+            return await carTypes
                 .OrderBy(x => x.Id)
                 .Skip((request.Page - 1) * request.PageSize)
                 .Take(request.PageSize)

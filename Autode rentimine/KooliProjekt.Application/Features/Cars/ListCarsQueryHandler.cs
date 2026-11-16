@@ -51,8 +51,14 @@ namespace KooliProjekt.Application.Features.Cars
                     nameof(request.PageSize));
             }
 
-            return await _repo
-                .Query()
+            var cars = _repo.Query();
+            if (!string.IsNullOrWhiteSpace(request.NumberPlate))
+            {
+                var numberPlate = request.NumberPlate.Trim().ToLower();
+                cars = cars.Where(car => car.NumberPlate.ToLower().Contains(numberPlate));
+            }
+
+            return await cars
                 .OrderBy(c => c.Id)
                 .Skip((request.Page - 1) * request.PageSize)
                 .Take(request.PageSize)

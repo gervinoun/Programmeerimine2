@@ -10,6 +10,31 @@ namespace KooliProjekt.Application.UnitTests.Features.InvoiceLines
     public class SaveInvoiceLineCommandHandlerTests : TestBase
     {
         [Fact]
+        public async Task Save_should_throw_ArgumentNullException_when_request_is_null()
+        {
+            var handler = new SaveInvoiceLineCommandHandler(
+                new InvoiceLineRepository(DbContext));
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() =>
+                handler.Handle(null, CancellationToken.None));
+        }
+
+        [Fact]
+        public async Task Save_should_return_property_error_when_id_is_negative()
+        {
+            var handler = new SaveInvoiceLineCommandHandler(
+                new InvoiceLineRepository(DbContext));
+
+            var result = await handler.Handle(
+                new SaveInvoiceLineCommand { Id = -1 },
+                CancellationToken.None);
+
+            Assert.True(result.HasErrors);
+            Assert.Equal("Id must be zero or greater", result.PropertyErrors["Id"]);
+            Assert.Empty(DbContext.InvoiceLines);
+        }
+
+        [Fact]
         public async Task Save_should_add_new_invoice_line()
         {
             var repository = new InvoiceLineRepository(DbContext);
