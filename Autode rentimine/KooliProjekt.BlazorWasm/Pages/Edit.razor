@@ -1,0 +1,243 @@
+@page "/create"
+@page "/edit/{Id:int}"
+@inject IApiClient ApiClient
+@inject NavigationManager Navigation
+@using System.Globalization
+@using System.ComponentModel.DataAnnotations
+@using KooliProjekt.BlazorWasm.Api
+
+<PageTitle>@(IsEdit ? "Edit car" : "Add car")</PageTitle>
+
+<h1>@(IsEdit ? "Edit car" : "Add car")</h1>
+
+@if (isLoading)
+{
+	<p><em>Loading car...</em></p>
+}
+else if (!string.IsNullOrWhiteSpace(loadError))
+{
+	<div class="alert alert-danger" role="alert">@loadError</div>
+	<a class="btn btn-secondary" href="/cars">Back to cars</a>
+}
+else if (editContext is not null)
+{
+	<EditForm EditContext="editContext" OnValidSubmit="SaveAsync">
+		<DataAnnotationsValidator />
+		<ValidationSummary />
+
+		@if (!string.IsNullOrWhiteSpace(serverError))
+		{
+			<div class="alert alert-danger" role="alert">@serverError</div>
+		}
+
+		<div class="mb-3">
+			<label for="numberPlate" class="form-label">Number plate</label>
+			<InputText id="numberPlate" class="form-control" @bind-Value="car.NumberPlate" disabled="@isSaving" />
+			<ValidationMessage For="@(() => car.NumberPlate)" />
+		</div>
+		<div class="mb-3">
+			<label for="typeId" class="form-label">Type ID</label>
+			<InputNumber id="typeId" class="form-control" @bind-Value="car.TypeId" disabled="@isSaving" />
+			<ValidationMessage For="@(() => car.TypeId)" />
+		</div>
+		<div class="mb-3">
+			<label for="kmrate" class="form-label">Km rate</label>
+			<InputText id="kmrate" class="form-control" @bind-Value="kmrateText" disabled="@isSaving" />
+			<ValidationMessage For="@(() => car.Kmrate)" />
+		</div>
+		<div class="mb-3">
+			<label for="timeRate" class="form-label">Time rate</label>
+			<InputText id="timeRate" class="form-control" @bind-Value="timeRateText" disabled="@isSaving" />
+			<ValidationMessage For="@(() => car.TimeRate)" />
+		</div>
+		<div class="form-check mb-3">
+			<InputCheckbox id="isAvailable" class="form-check-input" @bind-Value="car.IsAvailable" disabled="@isSaving" />
+			<label for="isAvailable" class="form-check-label">Available</label>
+		</div>
+
+		<button type="submit" class="btn btn-primary" disabled="@isSaving">
+			@(isSaving ? "Saving..." : "Save")
+		</button>
+		<a class="btn btn-secondary ms-2" href="/cars">Cancel</a>
+	</EditForm>
+}
+
+@code {
+	[Parameter]
+	public int? Id { get; set; }
+
+	private Car car;
+	private EditContext editContext;
+	private ValidationMessageStore validationMessages;
+	private string kmrateText = "0";
+	private string timeRateText = "0";
+	private string loadError;
+	private string serverError;
+	private bool isLoading = true;
+	private bool isSaving;
+	private bool IsEdit => Id.HasValue;
+
+	protected override async Task OnParametersSetAsync()
+	{
+		isLoading = true;
+		loadError = null;
+		serverError = null;
+
+		try
+		{
+			if (Id is > 0)
+			{
+				var result = await ApiClient.Get(Id.Value);
+				car = result?.Value;
+				if (car is null)
+				{
+					loadError = result?.Errors?.FirstOrDefault() ?? $"Car with ID {Id.Value} was not found.";
+				}
+			}
+			else if (IsEdit)
+			{
+				loadError = "A valid car ID is required.";
+			}
+			else
+			{
+				car = new Car { Id = 0, IsAvailable = true };
+			}
+
+			if (car is not null)
+			{
+				kmrateText = car.Kmrate.ToString(CultureInfo.InvariantCulture);
+				timeRateText = car.TimeRate.ToString(CultureInfo.InvariantCulture);
+				editContext = new EditContext(car);
+				validationMessages = new ValidationMessageStore(editContext);
+				editContext.OnFieldChanged += (_, args) => validationMessages.Clear(args.FieldIdentifier);
+			}
+		}
+		catch (HttpRequestException)
+		{
+			loadError = "Unable to load the car from the Web API. Verify that it is running at http://localhost:5086.";
+		}
+		catch (TaskCanceledException)
+		{
+			loadError = "The request to load the car timed out.";
+		}
+		catch (System.Text.Json.JsonException)
+		{
+			loadError = "The Web API returned car data in an unexpected format.";
+		}
+		finally
+		{
+			isLoading = false;
+		}
+	}
+
+	private async Task SaveAsync()
+	{
+		if (isSaving || editContext is null)
+		{
+			return;
+		}
+
+		isSaving = true;
+		serverError = null;
+		validationMessages.Clear();
+
+		try
+		{
+			var validRates = TryParseRate(kmrateText, nameof(Car.Kmrate), out var kmrate)
+				& TryParseRate(timeRateText, nameof(Car.TimeRate), out var timeRate);
+			if (!validRates)
+			{
+				editContext.NotifyValidationStateChanged();
+				return;
+			}
+
+			car.Kmrate = kmrate;
+			car.TimeRate = timeRate;
+			var result = await ApiClient.Save(car);
+			if (result is null)
+			{
+				serverError = "The Web API returned an empty Save response.";
+				return;
+			}
+
+			var hasErrors = result.HasErrors || result.Errors?.Count > 0 || result.PropertyErrors?.Count > 0;
+			if (hasErrors)
+			{
+				serverError = string.Join(Environment.NewLine, result.Errors ?? Array.Empty<string>());
+				foreach (var error in result.PropertyErrors ?? new Dictionary<string, string>())
+				{
+					var field = GetFieldIdentifier(error.Key);
+					validationMessages.Add(field, error.Value);
+				}
+				if (string.IsNullOrWhiteSpace(serverError) && (result.PropertyErrors?.Count ?? 0) > 0)
+				{
+					serverError = "Please correct the highlighted fields.";
+				}
+
+				editContext.NotifyValidationStateChanged();
+				return;
+			}
+
+			Navigation.NavigateTo("/cars");
+		}
+		catch (HttpRequestException exception)
+		{
+			serverError = $"Unable to save the car: {exception.Message}";
+		}
+		catch (TaskCanceledException)
+		{
+			serverError = "The request to save the car timed out.";
+		}
+		catch (System.Text.Json.JsonException)
+		{
+			serverError = "The Web API returned a Save response in an unexpected format.";
+		}
+		finally
+		{
+			isSaving = false;
+		}
+	}
+
+	private bool TryParseRate(string input, string propertyName, out decimal value)
+	{
+		var normalized = input?.Trim();
+		if (string.IsNullOrWhiteSpace(normalized)
+			|| normalized.EndsWith(",", StringComparison.Ordinal)
+			|| normalized.EndsWith(".", StringComparison.Ordinal)
+			|| (normalized.Contains(',') && normalized.Contains('.')))
+		{
+			value = 0;
+			validationMessages.Add(new FieldIdentifier(car, propertyName), "Enter a complete decimal using a comma or dot separator.");
+			return false;
+		}
+
+		normalized = normalized.Replace(',', '.');
+		if (!decimal.TryParse(normalized, NumberStyles.AllowLeadingSign | NumberStyles.AllowDecimalPoint,
+			CultureInfo.InvariantCulture, out value))
+		{
+			validationMessages.Add(new FieldIdentifier(car, propertyName), "Enter a valid decimal using a comma or dot separator.");
+			return false;
+		}
+
+		if (value < 0)
+		{
+			validationMessages.Add(new FieldIdentifier(car, propertyName), "The rate must be zero or greater.");
+			return false;
+		}
+
+		return true;
+	}
+
+	private FieldIdentifier GetFieldIdentifier(string propertyName)
+	{
+		return propertyName switch
+		{
+			nameof(Car.NumberPlate) => new FieldIdentifier(car, nameof(Car.NumberPlate)),
+			nameof(Car.TypeId) => new FieldIdentifier(car, nameof(Car.TypeId)),
+			nameof(Car.Kmrate) => new FieldIdentifier(car, nameof(Car.Kmrate)),
+			nameof(Car.TimeRate) => new FieldIdentifier(car, nameof(Car.TimeRate)),
+			nameof(Car.IsAvailable) => new FieldIdentifier(car, nameof(Car.IsAvailable)),
+			_ => new FieldIdentifier(car, string.Empty)
+		};
+	}
+}

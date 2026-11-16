@@ -18,5 +18,19 @@ namespace KooliProjekt.BlazorWasm
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadFromJsonAsync<List<Car>>() ?? new List<Car>();
         }
+
+        public async Task<OperationResultResponse<Car>> Get(int id)
+        {
+            using var response = await _client.GetAsync($"api/Cars/{id}");
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadFromJsonAsync<OperationResultResponse<Car>>();
+        }
+
+        public async Task<OperationResultResponse<object>> Save(Car car)
+        {
+            using var response = await _client.PostAsJsonAsync("api/Cars", car);
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadFromJsonAsync<OperationResultResponse<object>>();
+        }
     }
 }
