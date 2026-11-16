@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http.Json;
@@ -63,6 +64,104 @@ namespace KooliProjekt.IntegrationTests
             var filteredCarTypes = await filteredResponse.Content.ReadFromJsonAsync<List<CarType>>();
             Assert.NotNull(filteredCarTypes);
             Assert.Equal("SUV", Assert.Single(filteredCarTypes).Name);
+        }
+
+        [Fact]
+        public async Task Save_should_create_a_new_car_type()
+        {
+            var result = await PostSaveAsync(new SaveCarTypeCommand { Name = "SUV" });
+
+            Assert.False(result.HasErrors);
+            Assert.Equal(1, await DbContext.CarTypes.CountAsync());
+            Assert.Equal("SUV", (await DbContext.CarTypes.SingleAsync()).Name);
+        }
+
+        [Fact]
+        public async Task Save_should_update_an_existing_car_type()
+        {
+            var carType = new CarType { Name = "Old type" };
+            DbContext.CarTypes.Add(carType);
+            await DbContext.SaveChangesAsync();
+
+            var result = await PostSaveAsync(new SaveCarTypeCommand
+            {
+                Id = carType.Id,
+                Name = "Updated type"
+            });
+
+            Assert.False(result.HasErrors);
+            await DbContext.Entry(carType).ReloadAsync();
+            Assert.Equal(1, await DbContext.CarTypes.CountAsync());
+            Assert.Equal("Updated type", carType.Name);
+        }
+
+        [Fact]
+        public async Task Save_should_return_error_for_a_missing_car_type_id()
+        {
+            var result = await PostSaveAsync(new SaveCarTypeCommand
+            {
+                Id = 9999,
+                Name = "Missing type"
+            });
+
+            Assert.True(result.HasErrors);
+            Assert.Contains("Car type not found", result.Errors);
+            Assert.Empty(await DbContext.CarTypes.ToListAsync());
+        }
+
+        [Fact]
+        public async Task Save_should_return_validation_error_for_an_empty_name()
+        {
+            var result = await PostSaveAsync(new SaveCarTypeCommand { Name = "" });
+
+            Assert.True(result.HasErrors);
+            Assert.Equal("Name is required", result.PropertyErrors[nameof(SaveCarTypeCommand.Name)]);
+            Assert.Empty(await DbContext.CarTypes.ToListAsync());
+        }
+
+        [Fact]
+        public async Task Delete_should_remove_an_existing_car_type()
+        {
+            var carType = new CarType { Name = "Delete type" };
+            DbContext.CarTypes.Add(carType);
+            await DbContext.SaveChangesAsync();
+
+            var result = await DeleteAsync(carType.Id);
+
+            Assert.False(result.HasErrors);
+            Assert.False(await DbContext.CarTypes.AnyAsync(x => x.Id == carType.Id));
+        }
+
+        [Fact]
+        public async Task Delete_should_leave_database_unchanged_for_a_missing_car_type()
+        {
+            var carType = new CarType { Name = "Keep type" };
+            DbContext.CarTypes.Add(carType);
+            await DbContext.SaveChangesAsync();
+
+            var result = await DeleteAsync(9999);
+
+            Assert.False(result.HasErrors);
+            Assert.Equal(1, await DbContext.CarTypes.CountAsync());
+            Assert.True(await DbContext.CarTypes.AnyAsync(x => x.Id == carType.Id));
+        }
+
+        private async Task<OperationResultResponse> PostSaveAsync(SaveCarTypeCommand command)
+        {
+            using var response = await Client.PostAsJsonAsync("/api/CarTypes", command);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            var result = await response.Content.ReadFromJsonAsync<OperationResultResponse>();
+            Assert.NotNull(result);
+            return result;
+        }
+
+        private async Task<OperationResultResponse> DeleteAsync(int id)
+        {
+            using var response = await Client.DeleteAsync($"/api/CarTypes/{id}");
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            var result = await response.Content.ReadFromJsonAsync<OperationResultResponse>();
+            Assert.NotNull(result);
+            return result;
         }
     }
 }

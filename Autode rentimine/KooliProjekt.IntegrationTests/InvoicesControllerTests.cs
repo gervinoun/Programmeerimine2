@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http.Json;
@@ -81,6 +82,138 @@ namespace KooliProjekt.IntegrationTests
             var byTotal = await totalResponse.Content.ReadFromJsonAsync<List<Invoice>>();
             Assert.NotNull(byTotal);
             Assert.Equal(7, Assert.Single(byTotal).BookingId);
+        }
+
+        [Fact]
+        public async Task Save_should_create_a_new_invoice()
+        {
+            var result = await PostSaveAsync(new SaveInvoiceCommand
+            {
+                BookingId = 7,
+                InvoiceDate = new System.DateTime(2025, 3, 1),
+                Total = 125.50m
+            });
+
+            Assert.False(result.HasErrors);
+            Assert.Equal(1, await DbContext.Invoices.CountAsync());
+            var savedInvoice = await DbContext.Invoices.SingleAsync();
+            Assert.Equal(7, savedInvoice.BookingId);
+            Assert.Equal(new System.DateTime(2025, 3, 1), savedInvoice.InvoiceDate);
+            Assert.Equal(125.50m, savedInvoice.Total);
+        }
+
+        [Fact]
+        public async Task Save_should_update_an_existing_invoice()
+        {
+            var invoice = new Invoice
+            {
+                BookingId = 5,
+                InvoiceDate = new System.DateTime(2025, 1, 1),
+                Total = 50m
+            };
+            DbContext.Invoices.Add(invoice);
+            await DbContext.SaveChangesAsync();
+
+            var result = await PostSaveAsync(new SaveInvoiceCommand
+            {
+                Id = invoice.Id,
+                BookingId = 7,
+                InvoiceDate = new System.DateTime(2025, 4, 1),
+                Total = 125.50m
+            });
+
+            Assert.False(result.HasErrors);
+            await DbContext.Entry(invoice).ReloadAsync();
+            Assert.Equal(1, await DbContext.Invoices.CountAsync());
+            Assert.Equal(7, invoice.BookingId);
+            Assert.Equal(new System.DateTime(2025, 4, 1), invoice.InvoiceDate);
+            Assert.Equal(125.50m, invoice.Total);
+        }
+
+        [Fact]
+        public async Task Save_should_return_error_for_a_missing_invoice_id()
+        {
+            var result = await PostSaveAsync(new SaveInvoiceCommand
+            {
+                Id = 9999,
+                BookingId = 7,
+                InvoiceDate = new System.DateTime(2025, 3, 1),
+                Total = 125.50m
+            });
+
+            Assert.True(result.HasErrors);
+            Assert.Contains("Invoice not found", result.Errors);
+            Assert.Empty(await DbContext.Invoices.ToListAsync());
+        }
+
+        [Fact]
+        public async Task Save_should_return_validation_error_for_an_invalid_booking_id()
+        {
+            var result = await PostSaveAsync(new SaveInvoiceCommand
+            {
+                BookingId = 0,
+                InvoiceDate = new System.DateTime(2025, 3, 1),
+                Total = 125.50m
+            });
+
+            Assert.True(result.HasErrors);
+            Assert.Equal("Booking id must be greater than zero", result.PropertyErrors[nameof(SaveInvoiceCommand.BookingId)]);
+            Assert.Empty(await DbContext.Invoices.ToListAsync());
+        }
+
+        [Fact]
+        public async Task Delete_should_remove_an_existing_invoice()
+        {
+            var invoice = new Invoice
+            {
+                BookingId = 7,
+                InvoiceDate = new System.DateTime(2025, 3, 1),
+                Total = 125.50m
+            };
+            DbContext.Invoices.Add(invoice);
+            await DbContext.SaveChangesAsync();
+
+            var result = await DeleteAsync(invoice.Id);
+
+            Assert.False(result.HasErrors);
+            Assert.False(await DbContext.Invoices.AnyAsync(x => x.Id == invoice.Id));
+        }
+
+        [Fact]
+        public async Task Delete_should_leave_database_unchanged_for_a_missing_invoice()
+        {
+            var invoice = new Invoice
+            {
+                BookingId = 7,
+                InvoiceDate = new System.DateTime(2025, 3, 1),
+                Total = 125.50m
+            };
+            DbContext.Invoices.Add(invoice);
+            await DbContext.SaveChangesAsync();
+
+            var result = await DeleteAsync(9999);
+
+            Assert.False(result.HasErrors);
+            Assert.Equal(1, await DbContext.Invoices.CountAsync());
+            Assert.True(await DbContext.Invoices.AnyAsync(x => x.Id == invoice.Id));
+        }
+
+        private async Task<OperationResultResponse> PostSaveAsync(SaveInvoiceCommand command)
+        {
+            using var response = await Client.PostAsJsonAsync("/api/Invoices", command);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            var result = await response.Content.ReadFromJsonAsync<OperationResultResponse>();
+            Assert.NotNull(result);
+            return result;
+        }
+
+        private async Task<OperationResultResponse> DeleteAsync(int id)
+        {
+            using var response = await Client.DeleteAsync($"/api/Invoices/{id}");
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            var result = await response.Content.ReadFromJsonAsync<OperationResultResponse>();
+            Assert.NotNull(result);
+            return result;
         }
     }
 }
