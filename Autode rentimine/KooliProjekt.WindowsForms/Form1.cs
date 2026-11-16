@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Globalization;
 using System.Net.Http;
 using KooliProjekt.WindowsForms.Api;
@@ -5,9 +6,11 @@ using Newtonsoft.Json;
 
 namespace KooliProjekt.WindowsForms
 {
-    public partial class Form1 : Form
+    public partial class Form1 : Form, IMainView
     {
         private readonly IApiClient _apiClient;
+        private MainViewPresenter _presenter;
+        private bool _suppressSelectionChanged;
 
         public Form1(IApiClient apiClient)
         {
@@ -15,90 +18,131 @@ namespace KooliProjekt.WindowsForms
             InitializeComponent();
         }
 
-        private async void Form1_Load(object sender, EventArgs e)
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<Car> DataSource
         {
-            await LoadData();
+            get => dataGridView1.DataSource as IList<Car>;
+            set
+            {
+                var wasSuppressed = _suppressSelectionChanged;
+                _suppressSelectionChanged = true;
+                try
+                {
+                    dataGridView1.DataSource = value;
+                }
+                finally
+                {
+                    _suppressSelectionChanged = wasSuppressed;
+                }
+            }
         }
 
-        private async Task LoadData(string numberPlateToSelect = null)
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Car SelectedItem
         {
-            try
+            get => dataGridView1.SelectedRows.Count > 0
+                ? dataGridView1.SelectedRows[0].DataBoundItem as Car
+                : null;
+            set
             {
-                var cars = await _apiClient.List();
-
-                Car carToSelect = null;
-                if (!string.IsNullOrWhiteSpace(numberPlateToSelect))
+                var wasSuppressed = _suppressSelectionChanged;
+                _suppressSelectionChanged = true;
+                try
                 {
-                    carToSelect = cars.FirstOrDefault(car =>
-                        string.Equals(car.NumberPlate, numberPlateToSelect, StringComparison.OrdinalIgnoreCase));
-
-                    if (carToSelect == null)
+                    if (value == null)
                     {
-                        var matchingCars = await _apiClient.List(numberPlateToSelect);
-                        carToSelect = matchingCars.FirstOrDefault(car =>
-                            string.Equals(car.NumberPlate, numberPlateToSelect, StringComparison.OrdinalIgnoreCase));
-
-                        if (carToSelect != null)
-                        {
-                            cars = cars.Append(carToSelect).ToList();
-                        }
+                        dataGridView1.ClearSelection();
+                        dataGridView1.CurrentCell = null;
+                        return;
                     }
-                }
 
-                dataGridView1.DataSource = cars;
-
-                if (carToSelect != null)
-                {
                     var row = dataGridView1.Rows
                         .Cast<DataGridViewRow>()
-                        .FirstOrDefault(candidate => ReferenceEquals(candidate.DataBoundItem, carToSelect));
+                        .FirstOrDefault(candidate => ReferenceEquals(candidate.DataBoundItem, value));
 
                     if (row != null && row.Cells.Count > 0)
                     {
+                        dataGridView1.ClearSelection();
                         dataGridView1.CurrentCell = row.Cells[0];
                         row.Selected = true;
                     }
                 }
+                finally
+                {
+                    _suppressSelectionChanged = wasSuppressed;
+                }
             }
-            catch (HttpRequestException exception)
-            {
-                ShowError($"Unable to load cars. Make sure the WebAPI is running at http://localhost:5086.\n\n{exception.Message}");
-            }
-            catch (TaskCanceledException)
-            {
-                ShowError("The request to load cars timed out. Make sure the WebAPI is running at http://localhost:5086.");
-            }
-            catch (JsonException exception)
-            {
-                ShowError($"The API returned an unreadable Cars response.\n\n{exception.Message}");
-            }
+        }
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string Id
+        {
+            get => idTextBox.Text;
+            set => idTextBox.Text = value ?? string.Empty;
+        }
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string NumberPlate
+        {
+            get => numberPlateTextBox.Text;
+            set => numberPlateTextBox.Text = value ?? string.Empty;
+        }
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string TypeId
+        {
+            get => typeIdTextBox.Text;
+            set => typeIdTextBox.Text = value ?? string.Empty;
+        }
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string Kmrate
+        {
+            get => kmRateTextBox.Text;
+            set => kmRateTextBox.Text = value ?? string.Empty;
+        }
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string TimeRate
+        {
+            get => timeRateTextBox.Text;
+            set => timeRateTextBox.Text = value ?? string.Empty;
+        }
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public bool IsAvailable
+        {
+            get => isAvailableCheckBox.Checked;
+            set => isAvailableCheckBox.Checked = value;
+        }
+
+        public void SetPresenter(MainViewPresenter presenter)
+        {
+            _presenter = presenter ?? throw new ArgumentNullException(nameof(presenter));
+        }
+
+        private async void Form1_Load(object sender, EventArgs e)
+        {
+            await _presenter.LoadData();
         }
 
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
         {
-            if (dataGridView1.CurrentRow?.DataBoundItem is not Car car)
+            if (_suppressSelectionChanged || _presenter == null)
             {
                 return;
             }
 
-            idTextBox.Text = car.Id.ToString(CultureInfo.InvariantCulture);
-            numberPlateTextBox.Text = car.NumberPlate;
-            typeIdTextBox.Text = car.TypeId.ToString(CultureInfo.InvariantCulture);
-            kmRateTextBox.Text = car.Kmrate.ToString(CultureInfo.CurrentCulture);
-            timeRateTextBox.Text = car.TimeRate.ToString(CultureInfo.CurrentCulture);
-            isAvailableCheckBox.Checked = car.IsAvailable;
+            _presenter.SetSelection(SelectedItem);
         }
 
         private void addButton_Click(object sender, EventArgs e)
         {
-            dataGridView1.ClearSelection();
-            dataGridView1.CurrentCell = null;
-            idTextBox.Clear();
-            numberPlateTextBox.Clear();
-            typeIdTextBox.Clear();
-            kmRateTextBox.Text = "0";
-            timeRateTextBox.Text = "0";
-            isAvailableCheckBox.Checked = true;
+            SelectedItem = null;
+            _presenter.SetSelection(null);
+            Kmrate = "0";
+            TimeRate = "0";
+            IsAvailable = true;
             numberPlateTextBox.Focus();
         }
 
@@ -118,7 +162,7 @@ namespace KooliProjekt.WindowsForms
                     return;
                 }
 
-                await LoadData(car.NumberPlate);
+                await _presenter.LoadData(car.NumberPlate);
             }
             catch (HttpRequestException exception)
             {
@@ -159,7 +203,7 @@ namespace KooliProjekt.WindowsForms
                     return;
                 }
 
-                await LoadData();
+                await _presenter.LoadData();
                 ClearCarFields();
             }
             catch (HttpRequestException exception)
@@ -182,32 +226,32 @@ namespace KooliProjekt.WindowsForms
             validationMessage = null;
 
             var id = 0;
-            if (!string.IsNullOrWhiteSpace(idTextBox.Text) &&
-                !int.TryParse(idTextBox.Text, NumberStyles.Integer, CultureInfo.InvariantCulture, out id))
+            if (!string.IsNullOrWhiteSpace(Id) &&
+                !int.TryParse(Id, NumberStyles.Integer, CultureInfo.InvariantCulture, out id))
             {
                 validationMessage = "Car ID must be a whole number.";
                 return false;
             }
 
-            if (string.IsNullOrWhiteSpace(numberPlateTextBox.Text))
+            if (string.IsNullOrWhiteSpace(NumberPlate))
             {
                 validationMessage = "Number plate is required.";
                 return false;
             }
 
-            if (!int.TryParse(typeIdTextBox.Text, NumberStyles.Integer, CultureInfo.InvariantCulture, out var typeId) || typeId <= 0)
+            if (!int.TryParse(TypeId, NumberStyles.Integer, CultureInfo.InvariantCulture, out var typeId) || typeId <= 0)
             {
                 validationMessage = "Type ID must be a whole number greater than zero.";
                 return false;
             }
 
-            if (!decimal.TryParse(kmRateTextBox.Text, NumberStyles.Number, CultureInfo.CurrentCulture, out var kmRate) || kmRate < 0)
+            if (!decimal.TryParse(Kmrate, NumberStyles.Number, CultureInfo.CurrentCulture, out var kmRate) || kmRate < 0)
             {
                 validationMessage = "Km rate must be a non-negative number.";
                 return false;
             }
 
-            if (!decimal.TryParse(timeRateTextBox.Text, NumberStyles.Number, CultureInfo.CurrentCulture, out var timeRate) || timeRate < 0)
+            if (!decimal.TryParse(TimeRate, NumberStyles.Number, CultureInfo.CurrentCulture, out var timeRate) || timeRate < 0)
             {
                 validationMessage = "Time rate must be a non-negative number.";
                 return false;
@@ -216,11 +260,11 @@ namespace KooliProjekt.WindowsForms
             car = new Car
             {
                 Id = id,
-                NumberPlate = numberPlateTextBox.Text.Trim(),
+                NumberPlate = NumberPlate.Trim(),
                 TypeId = typeId,
                 Kmrate = kmRate,
                 TimeRate = timeRate,
-                IsAvailable = isAvailableCheckBox.Checked
+                IsAvailable = IsAvailable
             };
             return true;
         }
@@ -258,15 +302,11 @@ namespace KooliProjekt.WindowsForms
 
         private void ClearCarFields()
         {
-            idTextBox.Clear();
-            numberPlateTextBox.Clear();
-            typeIdTextBox.Clear();
-            kmRateTextBox.Clear();
-            timeRateTextBox.Clear();
-            isAvailableCheckBox.Checked = false;
+            SelectedItem = null;
+            _presenter.SetSelection(null);
         }
 
-        private static void ShowError(string message)
+        public void ShowError(string message)
         {
             MessageBox.Show(message, "Cars API", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
