@@ -18,9 +18,12 @@ namespace KooliProjekt.WebAPI.Controllers
 
         // GET api/CarTypes
         [HttpGet]
-        public async Task<IActionResult> List()
+        public async Task<IActionResult> List([FromQuery] string name = null)
         {
-            var carTypes = await _mediator.Send(new ListCarTypesQuery());
+            var carTypes = await _mediator.Send(new ListCarTypesQuery
+            {
+                Name = name
+            });
             return Ok(carTypes);
         }
 

@@ -18,9 +18,15 @@ namespace KooliProjekt.WebAPI.Controllers
 
         // GET api/Users
         [HttpGet]
-        public async Task<IActionResult> List()
+        public async Task<IActionResult> List(
+            [FromQuery] string name = null,
+            [FromQuery] string email = null)
         {
-            var users = await _mediator.Send(new ListUsersQuery());
+            var users = await _mediator.Send(new ListUsersQuery
+            {
+                Name = name,
+                Email = email
+            });
             return Ok(users);
         }
 

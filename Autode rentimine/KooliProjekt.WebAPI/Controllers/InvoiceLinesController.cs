@@ -18,9 +18,12 @@ namespace KooliProjekt.WebAPI.Controllers
 
         // GET api/InvoiceLines
         [HttpGet]
-        public async Task<IActionResult> List()
+        public async Task<IActionResult> List([FromQuery] string description = null)
         {
-            var lines = await _mediator.Send(new ListInvoiceLinesQuery());
+            var lines = await _mediator.Send(new ListInvoiceLinesQuery
+            {
+                Description = description
+            });
             return Ok(lines);
         }
 

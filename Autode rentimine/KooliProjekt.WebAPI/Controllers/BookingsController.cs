@@ -18,9 +18,12 @@ namespace KooliProjekt.WebAPI.Controllers
 
         
         [HttpGet]
-        public async Task<IActionResult> List()
+        public async Task<IActionResult> List([FromQuery] string status = null)
         {
-            var bookings = await _mediator.Send(new ListBookingsQuery());
+            var bookings = await _mediator.Send(new ListBookingsQuery
+            {
+                Status = status
+            });
             return Ok(bookings);
         }
 

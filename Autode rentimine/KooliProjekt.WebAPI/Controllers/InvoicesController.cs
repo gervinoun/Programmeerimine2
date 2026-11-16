@@ -1,6 +1,7 @@
 using KooliProjekt.Application.Features.Invoices;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace KooliProjekt.WebAPI.Controllers
@@ -18,9 +19,17 @@ namespace KooliProjekt.WebAPI.Controllers
 
         // GET api/Invoices
         [HttpGet]
-        public async Task<IActionResult> List()
+        public async Task<IActionResult> List(
+            [FromQuery] int? bookingId,
+            [FromQuery] DateTime? invoiceDate,
+            [FromQuery] decimal? total)
         {
-            var invoices = await _mediator.Send(new ListInvoicesQuery());
+            var invoices = await _mediator.Send(new ListInvoicesQuery
+            {
+                BookingId = bookingId,
+                InvoiceDate = invoiceDate,
+                Total = total
+            });
             return Ok(invoices);
         }
 
