@@ -20,7 +20,7 @@ namespace KooliProjekt.WindowsForms
                 BaseAddress = new Uri("http://localhost:5086/")
             };
             var apiClient = new ApiClient(httpClient);
-            var form = new Form1(apiClient);
+            var form = new Form1();
             var presenter = new MainViewPresenter(form, apiClient);
             form.SetPresenter(presenter);
 

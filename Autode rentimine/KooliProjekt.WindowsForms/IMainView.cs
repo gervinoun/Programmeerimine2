@@ -13,6 +13,8 @@ namespace KooliProjekt.WindowsForms
         string Kmrate { get; set; }
         string TimeRate { get; set; }
         bool IsAvailable { get; set; }
+        bool ConfirmDelete();
+        void FocusNumberPlate();
         void ShowError(string message);
     }
 }
