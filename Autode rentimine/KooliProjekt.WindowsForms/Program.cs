@@ -1,3 +1,7 @@
+using System;
+using System.Net.Http;
+using KooliProjekt.WindowsForms.Api;
+
 namespace KooliProjekt.WindowsForms
 {
     internal static class Program
@@ -11,7 +15,11 @@ namespace KooliProjekt.WindowsForms
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
+            using var httpClient = new HttpClient
+            {
+                BaseAddress = new Uri("http://localhost:5086/")
+            };
+            Application.Run(new Form1(new ApiClient(httpClient)));
         }
     }
 }
