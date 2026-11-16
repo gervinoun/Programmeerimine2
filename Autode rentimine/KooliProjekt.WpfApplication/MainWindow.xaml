@@ -40,16 +40,16 @@
             <TextBlock Text="Type ID" Margin="5,5,5,0" />
             <TextBox Text="{Binding SelectedCar.TypeId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5" />
             <TextBlock Text="Km rate" Margin="5,5,5,0" />
-            <TextBox Text="{Binding SelectedCar.Kmrate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5" />
+            <TextBox Text="{Binding KmrateText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5" />
             <TextBlock Text="Time rate" Margin="5,5,5,0" />
-            <TextBox Text="{Binding SelectedCar.TimeRate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5" />
+            <TextBox Text="{Binding TimeRateText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5" />
             <CheckBox Content="Available" IsChecked="{Binding SelectedCar.IsAvailable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5" />
             <TextBlock Text="{Binding ErrorMessage}" Foreground="Red" TextWrapping="Wrap" Margin="5" />
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-                <Button Margin="5" Padding="5">New</Button>
-                <Button Margin="5" Padding="5">Save</Button>
-                <Button Margin="5" Padding="5">Delete</Button>
+                <Button Margin="5" Padding="5" Content="New" Command="{Binding AddNewCommand}" />
+                <Button Margin="5" Padding="5" Content="Save" Command="{Binding SaveCommand}" CommandParameter="{Binding SelectedCar}" />
+                <Button Margin="5" Padding="5" Content="Delete" Command="{Binding DeleteCommand}" CommandParameter="{Binding SelectedCar}" />
             </StackPanel>
         </StackPanel>
     </Grid>

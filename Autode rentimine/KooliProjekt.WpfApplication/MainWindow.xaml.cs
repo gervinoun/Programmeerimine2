@@ -21,7 +21,7 @@ namespace KooliProjekt.WpfApplication
                 BaseAddress = new Uri("http://localhost:5086/")
             };
 
-            var viewModel = new MainWindowViewModel(new ApiClient(_httpClient));
+            var viewModel = new MainWindowViewModel(new ApiClient(_httpClient), new DialogProvider());
             DataContext = viewModel;
             Loaded += async (_, _) => await viewModel.LoadCarsAsync();
             Closed += (_, _) => _httpClient.Dispose();

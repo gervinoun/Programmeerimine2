@@ -6,6 +6,8 @@ namespace KooliProjekt.WpfApplication.Api
 {
     public interface IApiClient
     {
-        Task<IList<Car>> List();
+        Task<IList<Car>> List(string numberPlate = null);
+        Task<OperationResultResponse> Save(Car car);
+        Task<OperationResultResponse> Delete(int id);
     }
 }
